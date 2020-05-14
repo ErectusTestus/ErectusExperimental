@@ -5435,10 +5435,13 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 		}
 		else if (EntityFlag & CUSTOM_ENTRY_ARMOR)
 		{
-			BYTE LegendaryRank = GetLegendaryRank(ItemData[i].DisplayPtr);
-			if (!ValidLegendary(LegendaryRank, EntityFlag, CurrentEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled))
+			if (LegendaryArmorEnabled)
 			{
-				continue;
+				BYTE LegendaryRank = GetLegendaryRank(ItemData[i].DisplayPtr);
+				if (!ValidLegendary(LegendaryRank, EntityFlag, CurrentEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled))
+				{
+					continue;
+				}
 			}
 		}
 
