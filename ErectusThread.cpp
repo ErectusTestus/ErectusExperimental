@@ -262,7 +262,7 @@ DWORD WINAPI LockingThread(LPVOID lpParameter)
 
 		if (CustomMeleeSettings.MeleeEnabled)
 		{
-			if (OverlayForeground && GetAsyncKeyState('C'))
+			if (OverlayForeground && GetAsyncKeyState('U'))
 			{
 				MeleeCounter++;
 				if (MeleeCounter > MeleeThreshold)
