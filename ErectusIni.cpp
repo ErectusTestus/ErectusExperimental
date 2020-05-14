@@ -774,6 +774,14 @@ MeleeSettings DefaultMeleeSettings
 	20,
 };
 
+ChargenSettings DefaultChargenSettings
+{
+	false,
+	0.33f,
+	0.33f,
+	0.33f,
+};
+
 OverlaySettingsA PlayerSettings = DefaultPlayerSettings;
 OverlaySettingsA NpcSettings = DefaultNpcSettings;
 OverlaySettingsB ContainerSettings = DefaultOverlaySettingsB;
@@ -802,6 +810,7 @@ EntityLooterSettings ContainerLooterSettings = DefaultEntityLooterSettings;
 HarvesterSettings CustomHarvesterSettings = DefaultHarvesterSettings;
 KnownRecipeSettings CustomKnownRecipeSettings = DefaultKnownRecipeSettings;
 MeleeSettings CustomMeleeSettings = DefaultMeleeSettings;
+ChargenSettings CustomChargenSettings = DefaultChargenSettings;
 
 void GetDWORD(const char *Section, const char *Key, DWORD *Value, DWORD *Default)
 {
@@ -1813,9 +1822,9 @@ void SetKnownRecipeSettings()
 
 void GetMeleeSettings()
 {
-	GetBool("MeleeSettings", "MeleeEnabled", &CustomMeleeSettings.MeleeEnabled, &CustomMeleeSettings.MeleeEnabled);
-	GetSliderInt("MeleeSettings", "MeleeSpeedMin", &CustomMeleeSettings.MeleeSpeedMin, &CustomMeleeSettings.MeleeSpeedMin, 1, 60);
-	GetSliderInt("MeleeSettings", "MeleeSpeedMax", &CustomMeleeSettings.MeleeSpeedMax, &CustomMeleeSettings.MeleeSpeedMax, 1, 60);
+	GetBool("MeleeSettings", "MeleeEnabled", &CustomMeleeSettings.MeleeEnabled, &DefaultMeleeSettings.MeleeEnabled);
+	GetSliderInt("MeleeSettings", "MeleeSpeedMin", &CustomMeleeSettings.MeleeSpeedMin, &DefaultMeleeSettings.MeleeSpeedMin, 1, 60);
+	GetSliderInt("MeleeSettings", "MeleeSpeedMax", &CustomMeleeSettings.MeleeSpeedMax, &DefaultMeleeSettings.MeleeSpeedMax, 1, 60);
 
 	if (CustomMeleeSettings.MeleeSpeedMax < CustomMeleeSettings.MeleeSpeedMin)
 	{
@@ -1830,9 +1839,25 @@ void SetMeleeSettings()
 		CustomMeleeSettings.MeleeSpeedMax = CustomMeleeSettings.MeleeSpeedMin;
 	}
 
-	SetBool("MeleeSettings", "MeleeEnabled", &CustomMeleeSettings.MeleeEnabled, &CustomMeleeSettings.MeleeEnabled);
-	SetSliderInt("MeleeSettings", "MeleeSpeedMin", &CustomMeleeSettings.MeleeSpeedMin, &CustomMeleeSettings.MeleeSpeedMin, 1, 60);
-	SetSliderInt("MeleeSettings", "MeleeSpeedMax", &CustomMeleeSettings.MeleeSpeedMax, &CustomMeleeSettings.MeleeSpeedMax, 1, 60);
+	SetBool("MeleeSettings", "MeleeEnabled", &CustomMeleeSettings.MeleeEnabled, &DefaultMeleeSettings.MeleeEnabled);
+	SetSliderInt("MeleeSettings", "MeleeSpeedMin", &CustomMeleeSettings.MeleeSpeedMin, &DefaultMeleeSettings.MeleeSpeedMin, 1, 60);
+	SetSliderInt("MeleeSettings", "MeleeSpeedMax", &CustomMeleeSettings.MeleeSpeedMax, &DefaultMeleeSettings.MeleeSpeedMax, 1, 60);
+}
+
+void GetChargenSettings()
+{
+	GetBool("ChargenSettings", "ChargenEditingEnabled", &CustomChargenSettings.ChargenEditingEnabled, &DefaultChargenSettings.ChargenEditingEnabled);
+	GetSliderFloat("ChargenSettings", "Thin", &CustomChargenSettings.Thin, &DefaultChargenSettings.Thin, 0.0f, 1.0f);
+	GetSliderFloat("ChargenSettings", "Muscular", &CustomChargenSettings.Muscular, &DefaultChargenSettings.Muscular, 0.0f, 1.0f);
+	GetSliderFloat("ChargenSettings", "Large", &CustomChargenSettings.Large, &DefaultChargenSettings.Large, 0.0f, 1.0f);
+}
+
+void SetChargenSettings()
+{
+	SetBool("ChargenSettings", "ChargenEditingEnabled", &CustomChargenSettings.ChargenEditingEnabled, &DefaultChargenSettings.ChargenEditingEnabled);
+	SetSliderFloat("ChargenSettings", "Thin", &CustomChargenSettings.Thin, &DefaultChargenSettings.Thin, 0.0f, 1.0f);
+	SetSliderFloat("ChargenSettings", "Muscular", &CustomChargenSettings.Muscular, &DefaultChargenSettings.Muscular, 0.0f, 1.0f);
+	SetSliderFloat("ChargenSettings", "Large", &CustomChargenSettings.Large, &DefaultChargenSettings.Large, 0.0f, 1.0f);
 }
 
 void GetExperimentalSettings()
@@ -1877,6 +1902,7 @@ void ReadIniSettings()
 	GetTeleportSettings();
 	GetNukeCodeSettings();
 	GetMeleeSettings();
+	GetChargenSettings();
 	GetExperimentalSettings();
 	file.write(ini, true);
 }
@@ -1911,6 +1937,7 @@ void WriteIniSettings()
 	SetTeleportSettings();
 	SetNukeCodeSettings();
 	SetMeleeSettings();
+	SetChargenSettings();
 	SetExperimentalSettings();
 	file.write(ini, true);
 }
