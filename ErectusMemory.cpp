@@ -5901,3 +5901,8 @@ bool MeleeAttack()
 	FreeEx(AllocAddress);
 	return true;
 }
+
+bool Chargen()
+{
+	return true;
+}
