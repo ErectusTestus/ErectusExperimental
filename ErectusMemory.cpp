@@ -5317,6 +5317,10 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 	int LegendaryItemIndex = 0;
 	LegendaryItem *LegendaryItemData = new LegendaryItem[ItemArraySize];
 	memset(LegendaryItemData, 0x00, ItemArraySize * sizeof(LegendaryItem));
+	
+	int RegularItemIndex = 0;
+	LegendaryItem *RegularItemData = new LegendaryItem[ItemArraySize];
+	memset(RegularItemData, 0x00, ItemArraySize * sizeof(LegendaryItem));
 
 	bool LegendaryWeaponsEnabled = AllowLegendaryWeapons(CurrentEntityLooterSettings);
 	bool LegendaryArmorEnabled = AllowLegendaryArmor(CurrentEntityLooterSettings);
@@ -5411,17 +5415,11 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 			}
 		}
 
-		TransferMessage TransferMessageData;
-		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
-		TransferMessageData.SrcFormid = EntityData.Formid;
-		TransferMessageData.DstFormid = LocalPlayer.Formid;
-		TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
-		TransferMessageData.ItemId = ItemData[i].ItemId;
-		TransferMessageData.Count = Count;
-		TransferMessageData.UnknownA = 0;
-		TransferMessageData.UnknownB = 1;
-		TransferMessageData.UnknownC = 0;
-		SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
+		RegularItemData[RegularItemIndex].ItemAddress = 0;
+		RegularItemData[RegularItemIndex].Flag = EntityFlag;
+		RegularItemData[RegularItemIndex].ItemId = ItemData[i].ItemId;
+		RegularItemData[RegularItemIndex].Count = Count;
+		RegularItemIndex++;
 	}
 
 	delete[]ItemData;
@@ -5434,6 +5432,28 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 
 	delete[]LegendaryItemData;
 	LegendaryItemData = nullptr;
+	
+	if (RegularItemIndex)
+	{
+		for (int i = 0; i < RegularItemIndex; i++)
+		{
+			TransferMessage TransferMessageData;
+			TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
+			TransferMessageData.SrcFormid = EntityData.Formid;
+			TransferMessageData.DstFormid = LocalPlayer.Formid;
+			TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
+			TransferMessageData.ItemId = RegularItemData[i].ItemId;
+			TransferMessageData.Count = RegularItemData[i].Count;
+			TransferMessageData.UnknownA = 0;
+			TransferMessageData.UnknownB = 1;
+			TransferMessageData.UnknownC = 0;
+			SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
+		}
+	}
+
+	delete[]RegularItemData;
+	RegularItemData = nullptr;
+	
 	return true;
 }
 
