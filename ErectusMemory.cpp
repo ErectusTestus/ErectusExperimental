@@ -52,6 +52,30 @@ DWORD64 TargetLockingClosestPtr = 0;
 int KnownRecipeArraySize = 0;
 DWORD KnownRecipeArray[0x1000];
 
+DWORD LegendaryFormidArray[]
+{
+	0x00425E28, 0x004392CD, 0x0037F7D9, 0x001A7B80, 0x001A7AF6, 0x001A7BE2, 0x001A7BD3, 0x001A7AB2, 0x001A7B88,
+	0x001A7BDA, 0x001A7C39, 0x0052BDC7, 0x0052BDC5, 0x0052BDC2, 0x0052BDC8, 0x0052BDB4, 0x0052BDB5, 0x0052BDB6,
+	0x0052BDB7, 0x0052BDBA, 0x0052BDBC, 0x0052BDBF, 0x005299F5, 0x005299ED, 0x00529A14, 0x005299FE, 0x00529A0F,
+	0x00529A0C, 0x00529A09, 0x005299F9, 0x005299FA, 0x005299FC, 0x00529A05, 0x00529A04, 0x005299FB, 0x00529A03,
+	0x005299FD, 0x00529A02, 0x005281B8, 0x005281B4, 0x00527F6F, 0x00527F72, 0x00527F6E, 0x00527F7D, 0x00527F75,
+	0x00527F6C, 0x00527F6D, 0x00527F74, 0x00527F84, 0x00527F82, 0x00527F8B, 0x00527F81, 0x00527F78, 0x00527F76,
+	0x00527F7F, 0x00527F77, 0x00527F79, 0x00527F7A, 0x00527F7B, 0x00525400, 0x00525401, 0x005253FB, 0x0052414C,
+	0x00524143, 0x0052414E, 0x0052414F, 0x00524150, 0x00524152, 0x00524153, 0x00524154, 0x00524146, 0x00524147,
+	0x0052414A, 0x0052414B, 0x00521914, 0x00521915, 0x004F6D77, 0x004F6D7C, 0x004F6D86, 0x004F6D76, 0x004F6D85,
+	0x004F6D84, 0x004F6D82, 0x004F6D83, 0x004F6D81, 0x004F6D80, 0x004F6D7F, 0x004F6D78, 0x004F6D7E, 0x004F6D7D,
+	0x004F6AAE, 0x004F6AAB, 0x004F6AA1, 0x004F6AA0, 0x004F6AA7, 0x004F6AA5, 0x004F6AB1, 0x004F5772, 0x004F5778,
+	0x004F5770, 0x004F5773, 0x004F577C, 0x004F5771, 0x004F5777, 0x004F5776, 0x004F577D, 0x004F577B, 0x004F577A,
+	0x004F5779, 0x004EE548, 0x004EE54B, 0x004EE54C, 0x004EE54E, 0x004ED02B, 0x004ED02E, 0x004ED02C, 0x004ED02F,
+	0x004E89B3, 0x004E89B2, 0x004E89AC, 0x004E89B4, 0x004E89B0, 0x004E89AF, 0x004E89AE, 0x004E89B6, 0x004E89AD,
+	0x004E89B5, 0x003C4E27, 0x003C3458, 0x00357FBF, 0x001142A8, 0x0011410E, 0x0011410D, 0x0011410C, 0x0011410B,
+	0x0011410A, 0x00114109, 0x00114108, 0x00114107, 0x00114106, 0x00114105, 0x00114104, 0x00114103, 0x00114101,
+	0x001140FF, 0x001140FD, 0x001140FC, 0x001140FB, 0x001140FA, 0x001140F8, 0x001140F2, 0x001140F1, 0x001140F0,
+	0x001140EF, 0x001140EE, 0x001140ED, 0x001140EC, 0x001140EB, 0x001140EA, 0x00113FC0, 0x001138DD, 0x0011384A,
+	0x0011374F, 0x0011371F, 0x0010F599, 0x0010F598, 0x0010F596, 0x00226436, 0x001F81EB, 0x001F7A75, 0x001F1E47,
+	0x001F1E0C, 0x001F1E0B, 0x001E73BD,
+};
+
 DWORD64 GetAddress(DWORD Formid)
 {
 	DWORD64 v1;
@@ -5159,36 +5183,132 @@ bool CheckEntityLooterItem(DWORD Formid, DWORD64 EntityFlag, EntityLooterSetting
 	return false;
 }
 
-bool ValidLegendary(DWORD LegendaryRank, LegendaryItem LegendaryItemData, EntityLooterSettings *CustomEntityLooterSettings, bool LegendaryWeaponsEnabled, bool LegendaryArmorEnabled)
+bool IsLegendaryFormid(DWORD Formid)
 {
-	if (LegendaryItemData.Flag & CUSTOM_ENTRY_WEAPON)
+	for (size_t i = 0; i < sizeof(LegendaryFormidArray) / sizeof(DWORD); i++)
+	{
+		if (Formid == LegendaryFormidArray[i])
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+BYTE GetLegendaryRank(DWORD64 DisplayPtr)
+{
+	if (!Valid(DisplayPtr)) return 0;
+
+	DWORD64 InstancedArrayPtr;
+	if (!RPM(DisplayPtr, &InstancedArrayPtr, sizeof(InstancedArrayPtr))) return 0;
+	if (!Valid(InstancedArrayPtr)) return 0;
+
+	ItemInstancedArray ItemInstancedArrayData;
+	if (!RPM(InstancedArrayPtr, &ItemInstancedArrayData, sizeof(ItemInstancedArrayData))) return 0;
+	if (!Valid(ItemInstancedArrayData.ArrayPtr) || ItemInstancedArrayData.ArrayEnd < ItemInstancedArrayData.ArrayPtr) return 0;
+
+	DWORD64 InstancedArraySize = (ItemInstancedArrayData.ArrayEnd - ItemInstancedArrayData.ArrayPtr) / sizeof(DWORD64);
+	if (!InstancedArraySize || InstancedArraySize > 0x7FFF) return 0;
+
+	DWORD64 *InstancedArray = new DWORD64[InstancedArraySize];
+	if (!RPM(ItemInstancedArrayData.ArrayPtr, &*InstancedArray, InstancedArraySize * sizeof(DWORD64)))
+	{
+		delete[]InstancedArray;
+		InstancedArray = nullptr;
+		return 0;
+	}
+
+	DWORD64 ObjectInstanceExtraPtr = 0;
+
+	for (DWORD64 i = 0; i < InstancedArraySize; i++)
+	{
+		if (!Valid(InstancedArray[i])) continue;
+
+		ExtraTextDisplayData ExtraTextDisplayDataData;
+		if (!RPM(InstancedArray[i], &ExtraTextDisplayDataData, sizeof(ExtraTextDisplayDataData))) continue;
+
+		DWORD64 rttiNamePtr = rttiGetNamePtr(ExtraTextDisplayDataData.vtable);
+		if (!rttiNamePtr) continue;
+
+		char rttiNameCheck[sizeof(".?AVBGSObjectInstanceExtra@@")];
+		if (!RPM(rttiNamePtr, &rttiNameCheck, sizeof(rttiNameCheck))) continue;
+		if (strcmp(rttiNameCheck, ".?AVBGSObjectInstanceExtra@@")) continue;
+
+		ObjectInstanceExtraPtr = InstancedArray[i];
+		break;
+	}
+
+	delete[]InstancedArray;
+	InstancedArray = nullptr;
+
+	if (!ObjectInstanceExtraPtr)
+	{
+		return 0;
+	}
+
+	ObjectInstanceExtra ObjectInstanceExtraData;
+	if (!RPM(ObjectInstanceExtraPtr, &ObjectInstanceExtraData, sizeof(ObjectInstanceExtraData))) return 0;
+	if (!Valid(ObjectInstanceExtraData.ModDataPtr)) return 0;
+
+	ModInstance ModInstanceData;
+	if (!RPM(ObjectInstanceExtraData.ModDataPtr, &ModInstanceData, sizeof(ModInstanceData))) return 0;
+	if (!Valid(ModInstanceData.ModListPtr) || !ModInstanceData.ModListSize) return 0;
+
+	DWORD64 ModArraySize = ModInstanceData.ModListSize / 0x8;
+	if (!ModArraySize || ModArraySize > 0x7FFF) return 0;
+
+	DWORD *ModArray = new DWORD[ModArraySize * 2];
+	if (!RPM(ModInstanceData.ModListPtr, &*ModArray, ModArraySize * 2 * sizeof(DWORD)))
+	{
+		delete[]ModArray;
+		return 0;
+	}
+
+	BYTE LegendaryRank = 0;
+
+	for (DWORD64 i = 0; i < ModArraySize; i++)
+	{
+		if (IsLegendaryFormid(ModArray[i * 2]))
+		{
+			LegendaryRank++;
+		}
+	}
+
+	delete[]ModArray;
+	return LegendaryRank;
+}
+
+bool ValidLegendary(BYTE LegendaryRank, DWORD64 EntityFlag, EntityLooterSettings *CustomEntityLooterSettings, bool LegendaryWeaponsEnabled, bool LegendaryArmorEnabled)
+{
+	if (EntityFlag & CUSTOM_ENTRY_WEAPON)
 	{
 		if (LegendaryWeaponsEnabled)
 		{
 			switch (LegendaryRank)
 			{
-			case 0x00000001:
+			case 0x01:
 				return CustomEntityLooterSettings->EntityLooterOneStarWeaponsEnabled;
-			case 0x00000002:
+			case 0x02:
 				return CustomEntityLooterSettings->EntityLooterTwoStarWeaponsEnabled;
-			case 0x00000003:
+			case 0x03:
 				return CustomEntityLooterSettings->EntityLooterThreeStarWeaponsEnabled;
 			default:
 				return CustomEntityLooterSettings->EntityLooterAllWeaponsEnabled;
 			}
 		}
 	}
-	else if (LegendaryItemData.Flag & CUSTOM_ENTRY_ARMOR)
+	else if (EntityFlag & CUSTOM_ENTRY_ARMOR)
 	{
 		if (LegendaryArmorEnabled)
 		{
 			switch (LegendaryRank)
 			{
-			case 0x00000001:
+			case 0x01:
 				return CustomEntityLooterSettings->EntityLooterOneStarArmorEnabled;
-			case 0x00000002:
+			case 0x02:
 				return CustomEntityLooterSettings->EntityLooterTwoStarArmorEnabled;
-			case 0x00000003:
+			case 0x03:
 				return CustomEntityLooterSettings->EntityLooterThreeStarArmorEnabled;
 			default:
 				return CustomEntityLooterSettings->EntityLooterAllArmorEnabled;
@@ -5197,86 +5317,6 @@ bool ValidLegendary(DWORD LegendaryRank, LegendaryItem LegendaryItemData, Entity
 	}
 
 	return false;
-}
-
-bool TransferLegendaryItems(DWORD Source, DWORD Destination, LegendaryItem *LegendaryItemData, int LegendaryItemSize, EntityLooterSettings *CustomEntityLooterSettings, bool LegendaryWeaponsEnabled, bool LegendaryArmorEnabled)
-{
-	size_t AllocSize = sizeof(ExecutionStar) + (LegendaryItemSize * sizeof(DWORD64) + (LegendaryItemSize * sizeof(DWORD)));
-	DWORD64 AllocAddress = AllocEx(AllocSize);
-
-	ExecutionStar ExecutionStarData;
-	ExecutionStarData.Function = Exe + OFFSET_LEGENDARY_STAR;
-	ExecutionStarData.ItemArraySize = LegendaryItemSize;
-	ExecutionStarData.ItemArray = AllocAddress + sizeof(ExecutionStar);
-	ExecutionStarData.ItemStarArray = AllocAddress + sizeof(ExecutionStar) + LegendaryItemSize * sizeof(DWORD64);
-
-	BYTE *PageData = new BYTE[AllocSize];
-	memset(PageData, 0x00, AllocSize);
-	memcpy(PageData, &ExecutionStarData, sizeof(ExecutionStarData));
-
-	for (int i = 0; i < LegendaryItemSize; i++)
-	{
-		memcpy(&PageData[sizeof(ExecutionStar) + i * sizeof(DWORD64)], &LegendaryItemData[i].ItemAddress, sizeof(DWORD64));
-	}
-
-	bool Written = WPM(AllocAddress, &*PageData, AllocSize);
-
-	delete[]PageData;
-	PageData = nullptr;
-
-	if (!Written)
-	{
-		FreeEx(AllocAddress);
-		return false;
-	}
-
-	DWORD64 ParamAddress = AllocAddress + sizeof(ExecutionStar::ASM);
-	HANDLE Thread = CreateRemoteThread(Handle, NULL, 0, LPTHREAD_START_ROUTINE(AllocAddress), LPVOID(ParamAddress), 0, 0);
-
-	if (Thread == NULL)
-	{
-		FreeEx(AllocAddress);
-		return false;
-	}
-
-	DWORD ThreadResult = WaitForSingleObject(Thread, 3000);
-	CloseHandle(Thread);
-
-	if (ThreadResult == WAIT_TIMEOUT)
-	{
-		return false;
-	}
-
-	DWORD *ExecutedStar = new DWORD[LegendaryItemSize];
-	if (!RPM(AllocAddress + sizeof(ExecutionStar) + LegendaryItemSize * sizeof(DWORD64), &*ExecutedStar, LegendaryItemSize * sizeof(DWORD)))
-	{
-		FreeEx(AllocAddress);
-		return false;
-	}
-
-	for (int i = 0; i < LegendaryItemSize; i++)
-	{
-		if (ValidLegendary(ExecutedStar[i], LegendaryItemData[i], CustomEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled))
-		{
-			TransferMessage TransferMessageData;
-			TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
-			TransferMessageData.SrcFormid = Source;
-			TransferMessageData.DstFormid = Destination;
-			TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
-			TransferMessageData.ItemId = LegendaryItemData[i].ItemId;
-			TransferMessageData.Count = LegendaryItemData[i].Count;
-			TransferMessageData.UnknownA = 0;
-			TransferMessageData.UnknownB = 1;
-			TransferMessageData.UnknownC = 0;
-			SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
-		}
-	}
-
-	delete[]ExecutedStar;
-	ExecutedStar = nullptr;
-
-	FreeEx(AllocAddress);
-	return true;
 }
 
 bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity LocalPlayer, bool OnlyUseEntityLooterList, bool UseEntityLooterBlacklist)
@@ -5313,14 +5353,6 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 		ItemData = nullptr;
 		return false;
 	}
-
-	int LegendaryItemIndex = 0;
-	LegendaryItem *LegendaryItemData = new LegendaryItem[ItemArraySize];
-	memset(LegendaryItemData, 0x00, ItemArraySize * sizeof(LegendaryItem));
-	
-	int RegularItemIndex = 0;
-	LegendaryItem *RegularItemData = new LegendaryItem[ItemArraySize];
-	memset(RegularItemData, 0x00, ItemArraySize * sizeof(LegendaryItem));
 
 	bool LegendaryWeaponsEnabled = AllowLegendaryWeapons(CurrentEntityLooterSettings);
 	bool LegendaryArmorEnabled = AllowLegendaryArmor(CurrentEntityLooterSettings);
@@ -5394,66 +5426,37 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 		{
 			if (LegendaryWeaponsEnabled)
 			{
-				LegendaryItemData[LegendaryItemIndex].ItemAddress = InventoryData.ItemArrayPtr + i * sizeof(Item);
-				LegendaryItemData[LegendaryItemIndex].Flag = EntityFlag;
-				LegendaryItemData[LegendaryItemIndex].ItemId = ItemData[i].ItemId;
-				LegendaryItemData[LegendaryItemIndex].Count = Count;
-				LegendaryItemIndex++;
-				continue;
+				BYTE LegendaryRank = GetLegendaryRank(ItemData[i].DisplayPtr);
+				if (!ValidLegendary(LegendaryRank, EntityFlag, CurrentEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled))
+				{
+					continue;
+				}
 			}
 		}
 		else if (EntityFlag & CUSTOM_ENTRY_ARMOR)
 		{
-			if (LegendaryArmorEnabled)
+			BYTE LegendaryRank = GetLegendaryRank(ItemData[i].DisplayPtr);
+			if (!ValidLegendary(LegendaryRank, EntityFlag, CurrentEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled))
 			{
-				LegendaryItemData[LegendaryItemIndex].ItemAddress = InventoryData.ItemArrayPtr + i * sizeof(Item);
-				LegendaryItemData[LegendaryItemIndex].Flag = EntityFlag;
-				LegendaryItemData[LegendaryItemIndex].ItemId = ItemData[i].ItemId;
-				LegendaryItemData[LegendaryItemIndex].Count = Count;
-				LegendaryItemIndex++;
 				continue;
 			}
 		}
 
-		RegularItemData[RegularItemIndex].ItemAddress = 0;
-		RegularItemData[RegularItemIndex].Flag = EntityFlag;
-		RegularItemData[RegularItemIndex].ItemId = ItemData[i].ItemId;
-		RegularItemData[RegularItemIndex].Count = Count;
-		RegularItemIndex++;
+		TransferMessage TransferMessageData;
+		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
+		TransferMessageData.SrcFormid = EntityData.Formid;
+		TransferMessageData.DstFormid = LocalPlayer.Formid;
+		TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
+		TransferMessageData.ItemId = ItemData[i].ItemId;
+		TransferMessageData.Count = Count;
+		TransferMessageData.UnknownA = 0;
+		TransferMessageData.UnknownB = 1;
+		TransferMessageData.UnknownC = 0;
+		SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
 	}
 
 	delete[]ItemData;
 	ItemData = nullptr;
-
-	if (LegendaryItemIndex)
-	{
-		TransferLegendaryItems(EntityData.Formid, LocalPlayer.Formid, LegendaryItemData, LegendaryItemIndex, CurrentEntityLooterSettings, LegendaryWeaponsEnabled, LegendaryArmorEnabled);
-	}
-
-	delete[]LegendaryItemData;
-	LegendaryItemData = nullptr;
-	
-	if (RegularItemIndex)
-	{
-		for (int i = 0; i < RegularItemIndex; i++)
-		{
-			TransferMessage TransferMessageData;
-			TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
-			TransferMessageData.SrcFormid = EntityData.Formid;
-			TransferMessageData.DstFormid = LocalPlayer.Formid;
-			TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
-			TransferMessageData.ItemId = RegularItemData[i].ItemId;
-			TransferMessageData.Count = RegularItemData[i].Count;
-			TransferMessageData.UnknownA = 0;
-			TransferMessageData.UnknownB = 1;
-			TransferMessageData.UnknownC = 0;
-			SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
-		}
-	}
-
-	delete[]RegularItemData;
-	RegularItemData = nullptr;
-	
 	return true;
 }
 
