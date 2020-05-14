@@ -541,7 +541,7 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 			if (ChargenCounter > 10)
 			{
 				ChargenCounter = 0;
-				Chargen();
+				ChargenEditing();
 			}
 		}
 		
