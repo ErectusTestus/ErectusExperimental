@@ -57,6 +57,7 @@
 #define OFFSET_RECIPE_FUNCTION							0x00C0FA30UL//1.3.0.23
 #define OFFSET_MELEE_ATTACK								0x015ECC30UL//1.3.0.23
 #define OFFSET_LEGENDARY_STAR							0x0053F7F0UL//1.3.0.23
+#define OFFSET_CHARGEN									0x059AF670UL//1.3.0.23
 
 //vtables
 #define VTABLE_TESNPC                                   0x036F2B70UL//1.3.0.23
@@ -549,6 +550,15 @@ public:
 	DWORD64 NPCIdArrayPtrB;//0x80
 	BYTE Padding0088[0x8];
 	int NPCIdArraySizeB;//0x90
+};
+
+class Chargen
+{
+public:
+	BYTE Padding[0x28];
+	float Thin;//0x28
+	float Muscular;//0x2C
+	float Heavy;//0x30
 };
 
 //Custom Classes
@@ -1213,6 +1223,15 @@ public:
 	int MeleeSpeedMax;
 };
 
+class ChargenSettings
+{
+public:
+	bool ChargenEditingEnabled;
+	float Thin;
+	float Muscular;
+	float Large;
+};
+
 //ErectusMain
 extern void Close();
 extern void SetOverlayMenu();
@@ -1469,3 +1488,4 @@ extern EntityLooterSettings ContainerLooterSettings;
 extern HarvesterSettings CustomHarvesterSettings;
 extern KnownRecipeSettings CustomKnownRecipeSettings;
 extern MeleeSettings CustomMeleeSettings;
+extern ChargenSettings CustomChargenSettings;
