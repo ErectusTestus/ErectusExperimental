@@ -56,7 +56,6 @@
 #define OFFSET_NPC_PTR_FUNCTION							0x0036D090UL//1.3.0.23
 #define OFFSET_RECIPE_FUNCTION							0x00C0FA30UL//1.3.0.23
 #define OFFSET_MELEE_ATTACK								0x015ECC30UL//1.3.0.23
-#define OFFSET_LEGENDARY_STAR							0x0053F7F0UL//1.3.0.23
 #define OFFSET_CHARGEN									0x059AF670UL//1.3.0.23
 
 //vtables
@@ -561,6 +560,20 @@ public:
 	float Large;//0x30
 };
 
+class ModInstance
+{
+public:
+	DWORD64 ModListPtr;//0x0
+	int ModListSize;//0x8
+};
+
+class ObjectInstanceExtra
+{
+public:
+	BYTE Padding0000[0x10];
+	DWORD64 ModDataPtr;//0x10
+};
+
 //Custom Classes
 class CustomEntry
 {
@@ -578,15 +591,6 @@ class OldWeapon
 public:
 	Weapon *WeaponData;
 	AimModel *AimModelData;
-};
-
-class LegendaryItem
-{
-public:
-	DWORD64 ItemAddress;
-	DWORD64 Flag;
-	DWORD ItemId;
-	int Count;
 };
 
 class ExecutionList
@@ -661,39 +665,6 @@ public:
 	DWORD64 RecipeArraySize;	//0x50 (0x10)
 	DWORD64 RecipeArray;		//0x58 (0x18)
 	DWORD64 LearnedRecipeArray;	//0x60 (0x20)
-};
-
-class ExecutionStar
-{
-public:
-	BYTE ASM[0x30]
-	{
-		0x55,					//push rbp
-		0x56,					//push rsi
-		0x57,					//push rdi
-		0x48, 0x83, 0xEC, 0x28,	//sub rsp, 0x28
-		0x48, 0x8B, 0xF1,		//mov rsi, rcx
-		0x48, 0x8B, 0x2E,		//mov rbp, [rsi]
-		0x31, 0xFF,				//xor edi, edi
-		0x48, 0x8B, 0x46, 0x10,	//mov rax, [rsi + 0x10]
-		0x48, 0x8B, 0x0C, 0xF8,	//mov rcx, [rax + rdi * 0x8]
-		0xFF, 0xD5,				//call rbp
-		0x48, 0x8B, 0x4E, 0x18,	//mov rcx, [rsi + 0x18]
-		0x89, 0x04, 0xB9,		//mov [rcx + rdi * 0x4], eax
-		0xFF, 0xC7,				//inc edi
-		0x3B, 0x7E, 0x08,		//cmp edi, [rsi + 0x08]
-		0x72, 0xE8,				//jb GET_STAR_LOOP
-		0x48, 0x83, 0xC4, 0x28,	//add rsp, 0x28
-		0x5F,					//pop rdi
-		0x5E,					//pop rsi
-		0x5D,					//pop rbp
-		0xC3,					//ret 
-		0xCC,					//Padding
-	};
-	DWORD64 Function;			//0x30 (0x00)
-	DWORD64 ItemArraySize;		//0x38 (0x08)
-	DWORD64 ItemArray;			//0x40 (0x10)
-	DWORD64 ItemStarArray;		//0x48 (0x18)
 };
 
 class ExternalFunction
