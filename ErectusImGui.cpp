@@ -1785,6 +1785,23 @@ void OverlayMenu()
 				ImGui::SliderInt("###LocalPlayerLuck", &CustomLocalPlayerSettings.Luck, 0, 99999, "Luck: %d");
 				if (ImGui::IsItemActive()) AllowDrag = false;
 				ValidateInt(&CustomLocalPlayerSettings.Luck, 0, 99999);
+				
+				LargeButtonToggle("Character Appearance Editing Enabled###ChargenEditingEnabled", &CustomChargenSettings.ChargenEditingEnabled);
+
+				ImGui::SetNextItemWidth(451.0f);
+				ImGui::SliderFloat("###ChargenThin", &CustomChargenSettings.Thin, 0.0f, 1.0f, "Character Appearance (Thin): %f");
+				if (ImGui::IsItemActive()) AllowDrag = false;
+				ValidateFloat(&CustomChargenSettings.Thin, 0.0f, 1.0f);
+
+				ImGui::SetNextItemWidth(451.0f);
+				ImGui::SliderFloat("###ChargenMuscular", &CustomChargenSettings.Muscular, 0.0f, 1.0f, "Character Appearance (Muscular): %f");
+				if (ImGui::IsItemActive()) AllowDrag = false;
+				ValidateFloat(&CustomChargenSettings.Muscular, 0.0f, 1.0f);
+
+				ImGui::SetNextItemWidth(451.0f);
+				ImGui::SliderFloat("###ChargenLarge", &CustomChargenSettings.Large, 0.0f, 1.0f, "Character Appearance (Large): %f");
+				if (ImGui::IsItemActive()) AllowDrag = false;
+				ValidateFloat(&CustomChargenSettings.Large, 0.0f, 1.0f);
 
 				ImGui::EndTabItem();
 			}
