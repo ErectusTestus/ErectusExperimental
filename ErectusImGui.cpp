@@ -1709,99 +1709,105 @@ void OverlayMenu()
 
 			if (ImGui::BeginTabItem("Player###PlayerTab"))
 			{
-				LargeButtonToggle("Position Spoofing (Keybind CTRL+L)##LocalPlayerPositionSpoofingEnabled", &CustomLocalPlayerSettings.PositionSpoofingEnabled);
-				ButtonToggle("Draw Position Status###LocalPlayerDrawPositionSpoofingEnabled", &CustomLocalPlayerSettings.DrawPositionSpoofingEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerPositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287, "Spoofed Height: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287);
+				if (ImGui::CollapsingHeader("Local Player Settings"))
+				{
+					LargeButtonToggle("Position Spoofing (Keybind CTRL+L)##LocalPlayerPositionSpoofingEnabled", &CustomLocalPlayerSettings.PositionSpoofingEnabled);
+					ButtonToggle("Draw Position Status###LocalPlayerDrawPositionSpoofingEnabled", &CustomLocalPlayerSettings.DrawPositionSpoofingEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerPositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287, "Spoofed Height: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287);
 
-				ButtonToggle("Noclip (Keybind CTRL+Y)###NoclipEnabled", &CustomLocalPlayerSettings.NoclipEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderFloat("###NoclipSpeed", &CustomLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f, "Speed: %.5f");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateFloat(&CustomLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f);
+					ButtonToggle("Noclip (Keybind CTRL+Y)###NoclipEnabled", &CustomLocalPlayerSettings.NoclipEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderFloat("###NoclipSpeed", &CustomLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f, "Speed: %.5f");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateFloat(&CustomLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f);
 
-				ButtonToggle("Client State", &CustomLocalPlayerSettings.ClientState);
-				ImGui::SameLine(235.0f);
-				ButtonToggle("Automatic Client State", &CustomLocalPlayerSettings.AutomaticClientState);
+					ButtonToggle("Client State", &CustomLocalPlayerSettings.ClientState);
+					ImGui::SameLine(235.0f);
+					ButtonToggle("Automatic Client State", &CustomLocalPlayerSettings.AutomaticClientState);
 
-				LargeButtonToggle("Freeze Action Points###LocalPlayerFreezeApEnabled", &CustomLocalPlayerSettings.FreezeApEnabled);
+					LargeButtonToggle("Freeze Action Points###LocalPlayerFreezeApEnabled", &CustomLocalPlayerSettings.FreezeApEnabled);
 
-				ButtonToggle("Action Points###LocalPlayerAPEnabled", &CustomLocalPlayerSettings.ActionPointsEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerAP", &CustomLocalPlayerSettings.ActionPoints, 0, 99999, "Action Points: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.ActionPoints, 0, 99999);
+					ButtonToggle("Action Points###LocalPlayerAPEnabled", &CustomLocalPlayerSettings.ActionPointsEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerAP", &CustomLocalPlayerSettings.ActionPoints, 0, 99999, "Action Points: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.ActionPoints, 0, 99999);
 
-				ButtonToggle("Strength###LocalPlayerStrengthEnabled", &CustomLocalPlayerSettings.StrengthEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerStrength", &CustomLocalPlayerSettings.Strength, 0, 99999, "Strength: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Strength, 0, 99999);
+					ButtonToggle("Strength###LocalPlayerStrengthEnabled", &CustomLocalPlayerSettings.StrengthEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerStrength", &CustomLocalPlayerSettings.Strength, 0, 99999, "Strength: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Strength, 0, 99999);
 
-				ButtonToggle("Perception###LocalPlayerPerceptionEnabled", &CustomLocalPlayerSettings.PerceptionEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerPerception", &CustomLocalPlayerSettings.Perception, 0, 99999, "Perception: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Perception, 0, 99999);
+					ButtonToggle("Perception###LocalPlayerPerceptionEnabled", &CustomLocalPlayerSettings.PerceptionEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerPerception", &CustomLocalPlayerSettings.Perception, 0, 99999, "Perception: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Perception, 0, 99999);
 
-				ButtonToggle("Endurance###LocalPlayerEnduranceEnabled", &CustomLocalPlayerSettings.EnduranceEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerEndurance", &CustomLocalPlayerSettings.Endurance, 0, 99999, "Endurance: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Endurance, 0, 99999);
+					ButtonToggle("Endurance###LocalPlayerEnduranceEnabled", &CustomLocalPlayerSettings.EnduranceEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerEndurance", &CustomLocalPlayerSettings.Endurance, 0, 99999, "Endurance: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Endurance, 0, 99999);
 
-				ButtonToggle("Charisma###LocalPlayerCharismaEnabled", &CustomLocalPlayerSettings.CharismaEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerCharisma", &CustomLocalPlayerSettings.Charisma, 0, 99999, "Charisma: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Charisma, 0, 99999);
+					ButtonToggle("Charisma###LocalPlayerCharismaEnabled", &CustomLocalPlayerSettings.CharismaEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerCharisma", &CustomLocalPlayerSettings.Charisma, 0, 99999, "Charisma: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Charisma, 0, 99999);
 
-				ButtonToggle("Intelligence###LocalPlayerIntelligenceEnabled", &CustomLocalPlayerSettings.IntelligenceEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerIntelligence", &CustomLocalPlayerSettings.Intelligence, 0, 99999, "Intelligence: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Intelligence, 0, 99999);
+					ButtonToggle("Intelligence###LocalPlayerIntelligenceEnabled", &CustomLocalPlayerSettings.IntelligenceEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerIntelligence", &CustomLocalPlayerSettings.Intelligence, 0, 99999, "Intelligence: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Intelligence, 0, 99999);
 
-				ButtonToggle("Agility###LocalPlayerAgilityEnabled", &CustomLocalPlayerSettings.AgilityEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerAgility", &CustomLocalPlayerSettings.Agility, 0, 99999, "Agility: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Agility, 0, 99999);
+					ButtonToggle("Agility###LocalPlayerAgilityEnabled", &CustomLocalPlayerSettings.AgilityEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerAgility", &CustomLocalPlayerSettings.Agility, 0, 99999, "Agility: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Agility, 0, 99999);
 
-				ButtonToggle("Luck###LocalPlayerLuckEnabled", &CustomLocalPlayerSettings.LuckEnabled);
-				ImGui::SameLine(235.0f);
-				ImGui::SetNextItemWidth(224.0f);
-				ImGui::SliderInt("###LocalPlayerLuck", &CustomLocalPlayerSettings.Luck, 0, 99999, "Luck: %d");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateInt(&CustomLocalPlayerSettings.Luck, 0, 99999);
-				
-				LargeButtonToggle("Character Appearance Editing Enabled###ChargenEditingEnabled", &CustomChargenSettings.ChargenEditingEnabled);
+					ButtonToggle("Luck###LocalPlayerLuckEnabled", &CustomLocalPlayerSettings.LuckEnabled);
+					ImGui::SameLine(235.0f);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::SliderInt("###LocalPlayerLuck", &CustomLocalPlayerSettings.Luck, 0, 99999, "Luck: %d");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateInt(&CustomLocalPlayerSettings.Luck, 0, 99999);
+				}
 
-				ImGui::SetNextItemWidth(451.0f);
-				ImGui::SliderFloat("###ChargenThin", &CustomChargenSettings.Thin, 0.0f, 1.0f, "Character Appearance (Thin): %f");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateFloat(&CustomChargenSettings.Thin, 0.0f, 1.0f);
+				if (ImGui::CollapsingHeader("Character Settings"))
+				{
+					LargeButtonToggle("Character Appearance Editing Enabled###ChargenEditingEnabled", &CustomChargenSettings.ChargenEditingEnabled);
 
-				ImGui::SetNextItemWidth(451.0f);
-				ImGui::SliderFloat("###ChargenMuscular", &CustomChargenSettings.Muscular, 0.0f, 1.0f, "Character Appearance (Muscular): %f");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateFloat(&CustomChargenSettings.Muscular, 0.0f, 1.0f);
+					ImGui::SetNextItemWidth(451.0f);
+					ImGui::SliderFloat("###ChargenThin", &CustomChargenSettings.Thin, 0.0f, 1.0f, "Character Appearance (Thin): %f");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateFloat(&CustomChargenSettings.Thin, 0.0f, 1.0f);
 
-				ImGui::SetNextItemWidth(451.0f);
-				ImGui::SliderFloat("###ChargenLarge", &CustomChargenSettings.Large, 0.0f, 1.0f, "Character Appearance (Large): %f");
-				if (ImGui::IsItemActive()) AllowDrag = false;
-				ValidateFloat(&CustomChargenSettings.Large, 0.0f, 1.0f);
+					ImGui::SetNextItemWidth(451.0f);
+					ImGui::SliderFloat("###ChargenMuscular", &CustomChargenSettings.Muscular, 0.0f, 1.0f, "Character Appearance (Muscular): %f");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateFloat(&CustomChargenSettings.Muscular, 0.0f, 1.0f);
+
+					ImGui::SetNextItemWidth(451.0f);
+					ImGui::SliderFloat("###ChargenLarge", &CustomChargenSettings.Large, 0.0f, 1.0f, "Character Appearance (Large): %f");
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					ValidateFloat(&CustomChargenSettings.Large, 0.0f, 1.0f);
+				}
 
 				ImGui::EndTabItem();
 			}
