@@ -331,6 +331,8 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 	int LootItemsThreshold = 0;
 
 	int NukeCodeCounter = 0;
+	
+	int ChargenCounter = 0;
 
 	while (!ThreadDestructionState)
 	{
@@ -532,7 +534,17 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 		{
 			LootItemsThreshold = 0;
 		}
-
+		
+		if (CustomChargenSettings.ChargenEditingEnabled)
+		{
+			ChargenCounter++;
+			if (ChargenCounter > 10)
+			{
+				ChargenCounter = 0;
+				Chargen();
+			}
+		}
+		
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 	}
 
