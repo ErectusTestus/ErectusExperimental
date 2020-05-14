@@ -5902,7 +5902,39 @@ bool MeleeAttack()
 	return true;
 }
 
-bool Chargen()
+bool ChargenEditing()
 {
+	DWORD64 ChargenPtr;
+	if (!RPM(Exe + OFFSET_CHARGEN, &ChargenPtr, sizeof(ChargenPtr))) return false;
+	if (!Valid(ChargenPtr)) return false;
+
+	Chargen ChargenData;
+	if (!RPM(ChargenPtr, &ChargenData, sizeof(ChargenData))) return false;
+
+	bool EditChargenData = false;
+
+	if (ChargenData.Thin != CustomChargenSettings.Thin)
+	{
+		ChargenData.Thin = CustomChargenSettings.Thin;
+		EditChargenData = true;
+	}
+
+	if (ChargenData.Muscular != CustomChargenSettings.Muscular)
+	{
+		ChargenData.Muscular = CustomChargenSettings.Muscular;
+		EditChargenData = true;
+	}
+
+	if (ChargenData.Large != CustomChargenSettings.Large)
+	{
+		ChargenData.Large = CustomChargenSettings.Large;
+		EditChargenData = true;
+	}
+
+	if (EditChargenData)
+	{
+		return WPM(ChargenPtr, &ChargenData, sizeof(ChargenData));
+	}
+
 	return true;
 }
