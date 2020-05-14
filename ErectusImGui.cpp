@@ -24,6 +24,12 @@ int CharlieCode[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 char **FavoritedWeaponsArray = nullptr;
 
+bool TemporaryOffsetEnabled = false;
+DWORD TemporaryOffset = 0;
+
+bool TemporaryValueEnabled = false;
+DWORD TemporaryValue = 0;
+
 bool DragMenu()
 {
 	if (!GetCursorPos(&PointerPosition)) return false;
@@ -2104,6 +2110,53 @@ void OverlayMenu()
 					ImGui::Text("%d %d %d %d %d %d %d %d - Charlie", CharlieCode[0], CharlieCode[1], CharlieCode[2], CharlieCode[3], CharlieCode[4], CharlieCode[5], CharlieCode[6], CharlieCode[7]);
 				}
 
+				if (ImGui::CollapsingHeader("Temporary Functions"))
+				{
+					ButtonToggle("Offset:###TemporaryOffsetEnabled", &TemporaryOffsetEnabled);
+					ImGui::SameLine(235.0f);
+					char TemporaryOffsetText[sizeof("00000000")];
+					sprintf_s(TemporaryOffsetText, "%08lX", TemporaryOffset);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::InputText("###TemporaryOffsetInput", TemporaryOffsetText, sizeof(TemporaryOffsetText), ImGuiInputTextFlags_CharsHexadecimal);
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					sscanf_s(TemporaryOffsetText, "%08lX", &TemporaryOffset);
+
+					ButtonToggle("Value:###TemporaryValueEnabled", &TemporaryValueEnabled);
+					ImGui::SameLine(235.0f);
+					char TemporaryValueText[sizeof("00000000")];
+					sprintf_s(TemporaryValueText, "%08lX", TemporaryValue);
+					ImGui::SetNextItemWidth(224.0f);
+					ImGui::InputText("###TemporaryValueInput", TemporaryValueText, sizeof(TemporaryValueText), ImGuiInputTextFlags_CharsHexadecimal);
+					if (ImGui::IsItemActive()) AllowDrag = false;
+					sscanf_s(TemporaryValueText, "%08lX", &TemporaryValue);
+
+					if (TemporaryOffsetEnabled && TemporaryValueEnabled)
+					{
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 1.0f, 0.0f, 0.3f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.0f, 1.0f, 0.0f, 0.4f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.0f, 1.0f, 0.0f, 0.5f));
+						if (ImGui::Button("Write DWORD###TemporaryDWORDFunctionEnabled", ImVec2(451.0f, 0.0f)))
+						{
+							if (WPM(Exe + TemporaryOffset, &TemporaryValue, sizeof(TemporaryValue)))
+							{
+								TemporaryOffsetEnabled = false;
+								TemporaryValueEnabled = false;
+							}
+						}
+						ImGui::PopStyleColor(3);
+					}
+					else
+					{
+						ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 0.3f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.0f, 0.0f, 0.4f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.0f, 0.0f, 0.5f));
+						ImGui::Button("Write DWORD###TemporaryDWORDFunctionDisable", ImVec2(451.0f, 0.0f));
+						ImGui::PopStyleColor(3);
+						ImGui::PopItemFlag();
+					}
+				}
+				
 				ImGui::EndTabItem();
 			}
 
