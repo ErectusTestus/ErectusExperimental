@@ -2622,7 +2622,11 @@ bool SendMessageToServer(void *Message, size_t Size)
 bool LootScrap()
 {
 	DWORD64 LocalPlayerPtr = GetLocalPlayerPtr(true);
-	if (!Valid(LocalPlayerPtr)) return false;
+	if (!Valid(LocalPlayerPtr))
+	{
+		CustomScrapLooterSettings.ScrapAutomaticLootingEnabled = false;
+		return false;
+	}
 
 	Entity LocalPlayer;
 	if (!RPM(LocalPlayerPtr, &LocalPlayer, sizeof(LocalPlayer))) return false;
@@ -2892,7 +2896,11 @@ bool CheckEnabledItem(DWORD Formid, DWORD64 EntityFlag, int NormalDistance)
 bool LootItems()
 {
 	DWORD64 LocalPlayerPtr = GetLocalPlayerPtr(true);
-	if (!Valid(LocalPlayerPtr)) return false;
+	if (!Valid(LocalPlayerPtr))
+	{
+		CustomItemLooterSettings.ItemAutomaticLootingEnabled = false;
+		return false;
+	}
 
 	Entity LocalPlayer;
 	if (!RPM(LocalPlayerPtr, &LocalPlayer, sizeof(LocalPlayer))) return false;
