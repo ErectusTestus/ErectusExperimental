@@ -558,7 +558,7 @@ public:
 	BYTE Padding[0x28];
 	float Thin;//0x28
 	float Muscular;//0x2C
-	float Heavy;//0x30
+	float Large;//0x30
 };
 
 //Custom Classes
