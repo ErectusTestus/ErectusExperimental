@@ -1661,7 +1661,7 @@ void OverlayMenu()
 
 				if (ImGui::CollapsingHeader("Melee Settings"))
 				{
-					LargeButtonToggle("Melee Enabled (Keybind: C)", &CustomMeleeSettings.MeleeEnabled);
+					LargeButtonToggle("Melee Enabled (Keybind: U)", &CustomMeleeSettings.MeleeEnabled);
 
 					ImGui::SetNextItemWidth(224.0f);
 					char MeleeSpeedMinText[sizeof("Melee Speed (Min): 60 (960 ms)")];
