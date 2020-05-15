@@ -272,7 +272,7 @@ bool HwndValid(DWORD ProcessId)
 		return false;
 	}
 
-	EnumWindows(HwndEnumFunc, Pid);
+	EnumWindows(WNDENUMPROC(HwndEnumFunc), Pid);
 	if (Hwnd == NULL)
 	{
 		SetProcessError(2, "Process State: HWND (Window) invalid", sizeof("Process State: HWND (Window) invalid"));
