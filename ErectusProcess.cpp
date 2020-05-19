@@ -122,7 +122,7 @@ void ResetProcessData(bool ClearProcessError, int NewProcessListSize)
 		ProcessList[ProcessIndex] = new char[sizeof("No process selected")];
 		sprintf_s(ProcessList[ProcessIndex], sizeof("No process selected"), "No process selected");
 		ProcessIdList = new DWORD[ProcessListSize];
-		ProcessIdList[ProcessIndex] = 0x00000000;
+		ProcessIdList[ProcessIndex] = 0;
 
 		if (!ProcessMenuActive)
 		{
@@ -231,8 +231,8 @@ bool UpdateProcessList()
 		if (!strcmp(lppe.szExeFile, "Fallout76.exe"))
 		{
 			CurrentProcess++;
-			ProcessList[CurrentProcess] = new char[sizeof("00000000 - Fallout76.exe")];
-			sprintf_s(ProcessList[CurrentProcess], sizeof("00000000 - Fallout76.exe"), "%08lX - Fallout76.exe", lppe.th32ProcessID);
+			ProcessList[CurrentProcess] = new char[sizeof("Fallout76.exe - 4294967295")];
+			sprintf_s(ProcessList[CurrentProcess], sizeof("Fallout76.exe - 4294967295"), "Fallout76.exe - %lu", lppe.th32ProcessID);
 			ProcessIdList[CurrentProcess] = lppe.th32ProcessID;
 		}
 	}
