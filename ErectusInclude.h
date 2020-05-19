@@ -59,20 +59,20 @@
 #define OFFSET_CHARGEN									0x059AF670UL//1.3.0.23
 
 //vtables
-#define VTABLE_TESNPC                                   0x036F2B70UL//1.3.0.23
-#define VTABLE_TESOBJECTCONT                            0x0367BAE8UL//1.3.0.23
-#define VTABLE_TESOBJECTMISC                            0x0367DE08UL//1.3.0.23
-#define VTABLE_TESOBJECTBOOK                            0x0367ADC8UL//1.3.0.23
-#define VTABLE_ALCHEMYITEM                              0x035D15E8UL//1.3.0.23
-#define VTABLE_TESAMMO                                  0x0366F290UL//1.3.0.23
-#define VTABLE_TESOBJECTWEAP                            0x03683C20UL//1.3.0.23
-#define VTABLE_TESOBJECTARMO                            0x03679FE8UL//1.3.0.23
-#define VTABLE_TESUTILITYITEM                           0x03685830UL//1.3.0.23
-#define VTABLE_BGSNOTE                                  0x036E90A8UL//1.3.0.23
-#define VTABLE_TESKEY                                   0x03673AC0UL//1.3.0.23
-#define VTABLE_TESFLORA									0x03670E88UL//1.3.0.23
-#define VTABLE_TESLEVITEM								0x03674D88UL//1.3.0.23
-#define VTABLE_CURRENCYOBJECT							0x0366DCE8UL//1.3.0.23
+#define VTABLE_TESNPC                                   0x038E0A20UL//1.3.1.26
+#define VTABLE_TESOBJECTCONT                            0x03862F50UL//1.3.1.26
+#define VTABLE_TESOBJECTMISC                            0x03865380UL//1.3.1.26
+#define VTABLE_TESOBJECTBOOK                            0x038621E0UL//1.3.1.26
+#define VTABLE_ALCHEMYITEM                              0x037ABC10UL//1.3.1.26
+#define VTABLE_TESAMMO                                  0x03855BB8UL//1.3.1.26
+#define VTABLE_TESOBJECTWEAP                            0x0386D958UL//1.3.1.26
+#define VTABLE_TESOBJECTARMO                            0x03861358UL//1.3.1.26
+#define VTABLE_TESUTILITYITEM                           0x0386F898UL//1.3.1.26
+#define VTABLE_BGSNOTE                                  0x038D6120UL//1.3.1.26
+#define VTABLE_TESKEY                                   0x0385A750UL//1.3.1.26
+#define VTABLE_TESFLORA                                 0x038578C0UL//1.3.1.26
+#define VTABLE_TESLEVITEM                               0x0385BB10UL//1.3.1.26
+#define VTABLE_CURRENCYOBJECT                           0x038545A0UL//1.3.1.26
 #define VTABLE_REQUESTACTIVATEREFMSG                    0x038DC600UL//1.3.0.23
 #define VTABLE_REQUESTTRANSFERITEMMSG                   0x038F17D8UL//1.3.0.23
 #define VTABLE_REQUESTTELEPORTTOLOCATIONMSG             0x038E5370UL//1.3.0.23
