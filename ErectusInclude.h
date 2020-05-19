@@ -28,11 +28,11 @@
 #include "ini.h"
 
 //Offsets
-#define OFFSET_LOCAL_PLAYER                             0x059AC798UL//1.3.0.23
-#define OFFSET_ENTITY_LIST                              0x057591E0UL//1.3.0.23
-#define OFFSET_MAIN                                     0x05A0F9E8UL//1.3.0.23
-#define OFFSET_CAMERA                                   0x069C7920UL//1.3.0.23
-#define OFFSET_CHAR_CONTROLLER                          0x05C0EBE0UL//1.3.0.23
+#define OFFSET_LOCAL_PLAYER                             0x05B49F78UL//1.3.1.26
+#define OFFSET_ENTITY_LIST                              0x05923C48UL//1.3.1.26
+#define OFFSET_MAIN                                     0x05BAA290UL//1.3.1.26
+#define OFFSET_CAMERA                                   0x06B54E68UL//1.3.1.26
+#define OFFSET_CHAR_CONTROLLER                          0x05DA26F0UL//1.3.1.26
 #define OFFSET_GET_PTR_A1                               0x0592A7A8UL//1.3.1.26
 #define OFFSET_GET_PTR_A2                               0x03CE0F90UL//1.3.1.26
 #define OFFSET_MESSAGE_SENDER                           0x013DE8F0UL//1.3.0.23
