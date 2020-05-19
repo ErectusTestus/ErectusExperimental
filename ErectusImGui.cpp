@@ -179,7 +179,7 @@ void ProcessMenu()
 		ImGui::Separator();
 		ImGui::Text("PID (Process Id)");
 		ImGui::NextColumn();
-		ImGui::Text("%08lX", Pid);
+		ImGui::Text("%lu", Pid);
 		ImGui::NextColumn();
 		ImGui::Separator();
 		ImGui::Text("HWND (Window)");
