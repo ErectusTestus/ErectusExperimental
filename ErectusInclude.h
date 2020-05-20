@@ -55,7 +55,6 @@
 #define OFFSET_NUKE_CODE                                0x0589E008UL//1.3.0.23
 #define OFFSET_NPC_LIST                                 0x0591EFC0UL//1.3.1.26
 #define OFFSET_NPC_PTR_FUNCTION                         0x0046EDB0UL//1.3.1.26
-#define OFFSET_RECIPE_FUNCTION                          0x00C0FA30UL//1.3.0.23
 #define OFFSET_MELEE_ATTACK                             0x016AC800UL//1.3.1.26
 #define OFFSET_CHARGEN                                  0x059AF670UL//1.3.0.23
 
@@ -198,10 +197,10 @@ public:
 class EntityList
 {
 public:
-	BYTE Padding0000[0x80];
-	DWORD64 ListPtr;//0x80
+	BYTE Padding0000[0x88];
+	DWORD64 ListPtr;//0x88
 	BYTE Padding0088[0x8];
-	int ListSize;//0x90
+	int ListSize;//0x98
 };
 
 class Entity
@@ -490,7 +489,7 @@ class ActorSnapshotComponent
 public:
 	//ActorCoreSnapshotComponent
 	DWORD64 ActorCorevtable;//0x0
-	BYTE ActorCorePadding0008[0xB8];
+	BYTE ActorCorePadding0008[0x98];
 	//ActorServerAuthSnapshotData
 	DWORD64 vtable;//0x0
 	BYTE Padding0008[0x33];
