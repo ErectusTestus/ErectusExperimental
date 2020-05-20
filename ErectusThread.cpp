@@ -425,6 +425,7 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 				if (ClientStateCounter > 60)
 				{
 					ClientStateCounter = 0;
+					SetClientState(2);
 				}
 			}
 		}
