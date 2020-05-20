@@ -57,6 +57,7 @@
 #define OFFSET_RECIPE_FUNCTION                          0x00C0FA30UL//1.3.0.23
 #define OFFSET_MELEE_ATTACK                             0x015ECC30UL//1.3.0.23
 #define OFFSET_CHARGEN                                  0x059AF670UL//1.3.0.23
+#define OFFSET_FAKE_MESSAGE                             0x0142696EUL//1.3.1.26
 
 //vtables
 #define VTABLE_TESNPC                                   0x038E0A20UL//1.3.1.26
