@@ -3405,17 +3405,17 @@ bool LockedTargetValid(bool *IsPlayer)
 
 bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool IsExiting, bool State)
 {
-	BYTE PageJmpOn[] = { 0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-	BYTE PageJmpOff[] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC };
+	BYTE PageJmpOn[] = { 0x48, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xE3 };
+	BYTE PageJmpOff[] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC };
 	BYTE PageJmpCheck[sizeof(PageJmpOff)];
 
 	if (!RPM(Exe + OFFSET_REDIRECTION_JMP, &PageJmpCheck, sizeof(PageJmpCheck))) return false;
 
 	DWORD64 PageCheck;
-	memcpy(&PageCheck, &PageJmpCheck[6], sizeof(PageCheck));
+	memcpy(&PageCheck, &PageJmpCheck[2], sizeof(PageCheck));
 	if (Valid(PageCheck) && PageCheck != *TargetingPage)
 	{
-		BYTE PageOpcode[] = { 0x48, 0xBF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x00 };
+		BYTE PageOpcode[] = { 0x48, 0xBB, 0x00, 0x00, 0
 		BYTE PageOpcodeCheck[sizeof(PageOpcode)];
 		if (!RPM(PageCheck, &PageOpcodeCheck, sizeof(PageOpcodeCheck))) return false;
 		if (memcmp(PageOpcodeCheck, PageOpcode, sizeof(PageOpcode))) return false;
@@ -3434,7 +3434,7 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 	{
 		TargetLocking TargetLockingData;
 		TargetLockingData.TargetLockingPtr = TargetLockingPtr;
-		DWORD64 OriginalFunction = Exe + OFFSET_REDIRECTION_RET;
+		DWORD64 OriginalFunction = Exe + OFFSET_REDIRECTION + 0x5;
 		DWORD64 OriginalFunctionCheck;
 		if (!RPM(*TargetingPage + 0x30, &OriginalFunctionCheck, sizeof(OriginalFunctionCheck))) return false;
 		if (OriginalFunctionCheck != OriginalFunction)
@@ -3453,9 +3453,9 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 		{
 			TargetLockingData.TargetLockingPtr = TargetLockingPtr;
 			if (!WPM(*TargetingPage, &TargetLockingData, sizeof(TargetLockingData))) return false;
-			memcpy(&PageJmpOn[6], &*TargetingPage, sizeof(DWORD64));
+			memcpy(&PageJmpOn[2], &*TargetingPage, sizeof(DWORD64));
 		}
-		memcpy(&PageJmpOn[6], &*TargetingPage, sizeof(DWORD64));
+		memcpy(&PageJmpOn[2], &*TargetingPage, sizeof(DWORD64));
 	}
 
 	bool IsPlayer = false;
@@ -3469,8 +3469,8 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 		TargetValid = false;
 	}
 
-	BYTE RedirectionOn[] = { 0xE9, 0x3D, 0x0B, 0x00, 0x00 };
-	BYTE RedirectionOff[] = { 0x48, 0x8B, 0x7C, 0x24, 0x50 };
+	BYTE RedirectionOn[] = { 0xE9, 0x69, 0xFE, 0xFF, 0xFF };
+	BYTE RedirectionOff[] = { 0x48, 0x8B, 0x5C, 0x24, 0x50 };
 	BYTE RedirectionCheck[sizeof(RedirectionOff)];
 
 	bool Redirection = RPM(Exe + OFFSET_REDIRECTION, &RedirectionCheck, sizeof(RedirectionCheck));
