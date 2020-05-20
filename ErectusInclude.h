@@ -41,10 +41,10 @@
 #define OFFSET_INFINITE_AMMO                            0x00D19A26UL//1.3.1.26
 #define OFFSET_REDIRECTION                              0x0181A826UL//1.3.1.26
 #define OFFSET_REDIRECTION_JMP                          0x0181A694UL//1.3.1.26
-#define OFFSET_NOCLIP_A                                 0x028A5483UL//1.3.0.23
-#define OFFSET_NOCLIP_B                                 0x0155F916UL//1.3.0.23
-#define OFFSET_NOCLIP_C                                 0x028A543BUL//1.3.0.23
-#define OFFSET_NOCLIP_D                                 0x0155F954UL//1.3.0.23
+#define OFFSET_NOCLIP_A                                 0x02985978UL//1.3.1.26
+#define OFFSET_NOCLIP_B                                 0x02985930UL//1.3.1.26
+#define OFFSET_NOCLIP_C                                 0x01622771UL//1.3.1.26
+#define OFFSET_NOCLIP_D                                 0x016227A1UL//1.3.1.26
 #define OFFSET_ACTOR_VALUE                              0x015E2FC0UL//1.3.0.23
 #define OFFSET_OPK_BEGIN                                0x028B2BE3UL//1.3.0.23
 #define OFFSET_OPK_END                                  0x028B2BFEUL//1.3.0.23
@@ -77,13 +77,6 @@
 #define VTABLE_REQUESTTELEPORTTOLOCATIONMSG             0x03B23D60UL//1.3.1.26
 #define VTABLE_CLIENTSTATEMSG                           0x03B23940UL//1.3.1.26
 #define VTABLE_REQUESTHITSONACTORS                      0x03B1B700UL//1.3.1.26
-
-//Item Transferring Id
-#define UNKNOWN_TRANSFER_ID                             0xE0001F7AUL//1.3.0.23
-
-//Noclip
-#define NOCLIP_DYNAMIC_CALL_A       { 0xE8, 0xA8, 0xD3, 0xFE, 0xFF }//1.3.0.23
-#define NOCLIP_DYNAMIC_CALL_B       { 0xE8, 0xB5, 0xE1, 0x32, 0x01 }//1.3.0.23
 
 //CustomEntry Flags
 #define CUSTOM_ENTRY_DEFAULT                            0x0000000000000000ULL
