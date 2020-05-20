@@ -50,7 +50,7 @@
 #define OFFSET_OPK_END                                  0x028B2BFEUL//1.3.0.23
 #define OFFSET_AV_REGEN                                 0x015E317FUL//1.3.0.23
 #define OFFSET_SERVER_POSITION                          0x013CCFC9UL//1.3.0.23
-#define OFFSET_ENTITY_ID                                0x04F4DC60UL//1.3.0.23
+#define OFFSET_ENTITY_ID                                0x0511A000UL//1.3.1.26
 #define OFFSET_NUKE_CODE                                0x0589E008UL//1.3.0.23
 #define OFFSET_NPC_LIST                                 0x0591EFC0UL//1.3.1.26
 #define OFFSET_NPC_PTR_FUNCTION                         0x0046EDB0UL//1.3.1.26
