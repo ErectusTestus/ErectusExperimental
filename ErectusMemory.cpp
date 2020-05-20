@@ -49,6 +49,8 @@ bool TargetLockingValid = false;
 float TargetLockingClosestDegrees = 0.0f;
 DWORD64 TargetLockingClosestPtr = 0;
 
+bool AllowMessages = false;
+
 int KnownRecipeArraySize = 0;
 DWORD KnownRecipeArray[0x1000];
 
@@ -2631,6 +2633,16 @@ bool MessagePatcher(bool State)
 
 bool SendMessageToServer(void *Message, size_t Size)
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	size_t AllocSize = Size + sizeof(ExternalFunction);
 	DWORD64 AllocAddress = AllocEx(AllocSize);
 	if (AllocAddress == 0) return false;
@@ -4616,6 +4628,16 @@ bool SendHitsToServer(Hits *HitsData, size_t HitsDataSize)
 
 bool SendDamage(DWORD WeaponId, BYTE *ShotsHit, BYTE *ShotsFired, BYTE Count)
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	if (!WeaponId)
 	{
 		return false;
@@ -5922,6 +5944,16 @@ bool Harvester()
 
 bool MeleeAttack()
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	DWORD64 LocalPlayerPtr = GetLocalPlayerPtr(true);
 	if (!Valid(LocalPlayerPtr)) return false;
 
