@@ -45,7 +45,7 @@
 #define OFFSET_NOCLIP_B                                 0x02985930UL//1.3.1.26
 #define OFFSET_NOCLIP_C                                 0x01622771UL//1.3.1.26
 #define OFFSET_NOCLIP_D                                 0x016227A1UL//1.3.1.26
-#define OFFSET_ACTOR_VALUE                              0x015E2FC0UL//1.3.0.23
+#define OFFSET_ACTOR_VALUE                              0x016A2D60UL//1.3.1.26
 #define OFFSET_OPK_BEGIN                                0x028B2BE3UL//1.3.0.23
 #define OFFSET_OPK_END                                  0x028B2BFEUL//1.3.0.23
 #define OFFSET_AV_REGEN                                 0x015E317FUL//1.3.0.23
