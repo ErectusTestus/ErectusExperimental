@@ -491,9 +491,9 @@ public:
 	float ModifiedHealth;//0x74
 	BYTE Padding0078[0x4];
 	float LostHealth;//0x7C
-	BYTE Padding0080[0xB0];
-	BYTE EpicRank;//0x130
-	BYTE Padding0131[0x7];
+	BYTE Padding0080[0xA0];
+	BYTE EpicRank;//0x120
+	BYTE Padding0121[0x7];
 };
 
 class LeveledList
