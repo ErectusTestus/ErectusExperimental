@@ -2594,6 +2594,41 @@ bool RenderCustomPlayerList()
 	return true;
 }
 
+bool MessagePatcher(bool State)
+{
+	BYTE FakeMessagesCheck[2];
+	if (!RPM(Exe + OFFSET_FAKE_MESSAGE, &FakeMessagesCheck, sizeof(FakeMessagesCheck))) return false;
+
+	BYTE FakeMessagesEnabled[] = { 0xB0, 0x01 };
+	BYTE FakeMessagesDisabled[] = { 0x32, 0xC0 };
+
+	if (!memcmp(FakeMessagesCheck, FakeMessagesEnabled, sizeof(FakeMessagesEnabled)))
+	{
+		if (State)
+		{
+			return true;
+		}
+		else
+		{
+			return WPM(Exe + OFFSET_FAKE_MESSAGE, &FakeMessagesDisabled, sizeof(FakeMessagesDisabled));
+		}
+	}
+
+	if (!memcmp(FakeMessagesCheck, FakeMessagesDisabled, sizeof(FakeMessagesDisabled)))
+	{
+		if (State)
+		{
+			return WPM(Exe + OFFSET_FAKE_MESSAGE, &FakeMessagesEnabled, sizeof(FakeMessagesEnabled));
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool SendMessageToServer(void *Message, size_t Size)
 {
 	size_t AllocSize = Size + sizeof(ExternalFunction);
