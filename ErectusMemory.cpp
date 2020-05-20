@@ -3590,19 +3590,19 @@ bool MovePlayer()
 void Noclip(bool State)
 {
 	BYTE NoclipOnA[] = { 0x0F, 0x1F, 0x44, 0x00, 0x00 };
-	BYTE NoclipOffA[] = NOCLIP_DYNAMIC_CALL_A;
+	BYTE NoclipOffA[] = { 0xE8, 0xC3, 0xC5, 0xFE, 0xFF };
 	BYTE NoclipCheckA[sizeof(NoclipOffA)];
 
-	BYTE NoclipOnB[] = { 0x0F, 0x1F, 0x44, 0x00, 0x00 };
-	BYTE NoclipOffB[] = NOCLIP_DYNAMIC_CALL_B;
+	BYTE NoclipOnB[] = { 0x0F, 0x1F, 0x40, 0x00 };
+	BYTE NoclipOffB[] = { 0x41, 0xFF, 0x50, 0x40 };
 	BYTE NoclipCheckB[sizeof(NoclipOffB)];
 
-	BYTE NoclipOnC[] = { 0x0F, 0x1F, 0x40, 0x00 };
-	BYTE NoclipOffC[] = { 0x41, 0xFF, 0x50, 0x40 };
+	BYTE NoclipOnC[] = { 0x0F, 0x1F, 0x44, 0x00, 0x00 };
+	BYTE NoclipOffC[] = { 0xE8, 0x9A, 0xA1, 0x34, 0x01 };
 	BYTE NoclipCheckC[sizeof(NoclipOffC)];
 
-	BYTE NoclipOnD[] = { 0x66, 0x90 };
-	BYTE NoclipOffD[] = { 0xFF, 0xD3 };
+	BYTE NoclipOnD[] = { 0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00 };
+	BYTE NoclipOffD[] = { 0xFF, 0x15, 0x59, 0xEC, 0xFF, 0x01 };
 	BYTE NoclipCheckD[sizeof(NoclipOffD)];
 
 	bool NoclipA = RPM(Exe + OFFSET_NOCLIP_A, &NoclipCheckA, sizeof(NoclipCheckA));
@@ -4314,7 +4314,7 @@ bool TransferItems(DWORD SourceFormid, DWORD DestinationFormid)
 		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
 		TransferMessageData.SrcFormid = SourceFormid;
 		TransferMessageData.DstFormid = DestinationFormid;
-		TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
+		TransferMessageData.UnknownId = 0xE0001F7A;
 		TransferMessageData.ItemId = ItemData[i].ItemId;
 		TransferMessageData.Count = Count;
 		TransferMessageData.UnknownA = 0;
@@ -5507,7 +5507,7 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
 		TransferMessageData.SrcFormid = EntityData.Formid;
 		TransferMessageData.DstFormid = LocalPlayer.Formid;
-		TransferMessageData.UnknownId = UNKNOWN_TRANSFER_ID;
+		TransferMessageData.UnknownId = 0xE0001F7A;
 		TransferMessageData.ItemId = ItemData[i].ItemId;
 		TransferMessageData.Count = Count;
 		TransferMessageData.UnknownA = 0;
