@@ -512,7 +512,7 @@ bool UpdateKnownRecipes()
 	}
 
 	ExecutionPlan ExecutionPlanData;
-	ExecutionPlanData.Function = Exe + OFFSET_RECIPE_FUNCTION;
+	ExecutionPlanData.Function = AllocAddress + sizeof(ExecutionPlan::ASM);
 	ExecutionPlanData.LocalPlayerPtr = LocalPlayerPtr;
 	ExecutionPlanData.RecipeArraySize = RecipeArraySize;
 	ExecutionPlanData.RecipeArray = AllocAddress + sizeof(ExecutionPlan);
@@ -541,7 +541,7 @@ bool UpdateKnownRecipes()
 		return false;
 	}
 
-	DWORD64 ParamAddress = AllocAddress + sizeof(ExecutionPlan::ASM);
+	DWORD64 ParamAddress = AllocAddress + sizeof(ExecutionPlan::ASM) + sizeof(ExecutionPlan::RBP);
 	HANDLE Thread = CreateRemoteThread(Handle, NULL, 0, LPTHREAD_START_ROUTINE(AllocAddress), LPVOID(ParamAddress), 0, 0);
 
 	if (Thread == NULL)
