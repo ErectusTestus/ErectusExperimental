@@ -4659,7 +4659,8 @@ bool SendDamage(DWORD WeaponId, BYTE *ShotsHit, BYTE *ShotsFired, BYTE Count)
 		}
 		else
 		{
-			*ShotsHit += 1;
+			//*ShotsHit += 1; (Changed in 1.3.1.26?)
+			*ShotsHit = 1;
 		}
 
 		for (int c = 0; c < GetRangedInt(1, 6); c++)
