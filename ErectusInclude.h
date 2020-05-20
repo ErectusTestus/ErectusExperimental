@@ -56,7 +56,7 @@
 #define OFFSET_NPC_LIST                                 0x057535E0UL//1.3.0.23
 #define OFFSET_NPC_PTR_FUNCTION                         0x0036D090UL//1.3.0.23
 #define OFFSET_RECIPE_FUNCTION                          0x00C0FA30UL//1.3.0.23
-#define OFFSET_MELEE_ATTACK                             0x015ECC30UL//1.3.0.23
+#define OFFSET_MELEE_ATTACK                             0x016AC800UL//1.3.1.26
 #define OFFSET_CHARGEN                                  0x059AF670UL//1.3.0.23
 
 //vtables
