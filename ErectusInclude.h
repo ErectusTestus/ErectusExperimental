@@ -35,7 +35,8 @@
 #define OFFSET_CHAR_CONTROLLER                          0x05DA26F0UL//1.3.1.26
 #define OFFSET_GET_PTR_A1                               0x0592A7A8UL//1.3.1.26
 #define OFFSET_GET_PTR_A2                               0x03CE0F90UL//1.3.1.26
-#define OFFSET_MESSAGE_SENDER                           0x013DE8F0UL//1.3.0.23
+#define OFFSET_MESSAGE_SENDER                           0x014AA5E0UL//1.3.1.26
+#define OFFSET_FAKE_MESSAGE                             0x0142696EUL//1.3.1.26
 #define OFFSET_DATA_HANDLER                             0x05753DC0UL//1.3.0.23
 #define OFFSET_INFINITE_AMMO                            0x00BFC853UL//1.3.0.23
 #define OFFSET_REDIRECTION                              0x01757B8EUL//1.3.0.23
@@ -57,7 +58,6 @@
 #define OFFSET_RECIPE_FUNCTION                          0x00C0FA30UL//1.3.0.23
 #define OFFSET_MELEE_ATTACK                             0x015ECC30UL//1.3.0.23
 #define OFFSET_CHARGEN                                  0x059AF670UL//1.3.0.23
-#define OFFSET_FAKE_MESSAGE                             0x0142696EUL//1.3.1.26
 
 //vtables
 #define VTABLE_TESNPC                                   0x038E0A20UL//1.3.1.26
@@ -74,11 +74,11 @@
 #define VTABLE_TESFLORA                                 0x038578C0UL//1.3.1.26
 #define VTABLE_TESLEVITEM                               0x0385BB10UL//1.3.1.26
 #define VTABLE_CURRENCYOBJECT                           0x038545A0UL//1.3.1.26
-#define VTABLE_REQUESTACTIVATEREFMSG                    0x038DC600UL//1.3.0.23
-#define VTABLE_REQUESTTRANSFERITEMMSG                   0x038F17D8UL//1.3.0.23
-#define VTABLE_REQUESTTELEPORTTOLOCATIONMSG             0x038E5370UL//1.3.0.23
-#define VTABLE_CLIENTSTATEMSG                           0x038E4F50UL//1.3.0.23
-#define VTABLE_REQUESTHITSONACTORS                      0x038DC1B0UL//1.3.0.23
+#define VTABLE_REQUESTACTIVATEREFMSG                    0x03B1BAD0UL//1.3.1.26
+#define VTABLE_REQUESTTRANSFERITEMMSG                   0x03B2FD28UL//1.3.1.26
+#define VTABLE_REQUESTTELEPORTTOLOCATIONMSG             0x03B23D60UL//1.3.1.26
+#define VTABLE_CLIENTSTATEMSG                           0x03B23940UL//1.3.1.26
+#define VTABLE_REQUESTHITSONACTORS                      0x03B1B700UL//1.3.1.26
 
 //Item Transferring Id
 #define UNKNOWN_TRANSFER_ID                             0xE0001F7AUL//1.3.0.23
