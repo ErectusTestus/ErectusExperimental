@@ -37,8 +37,8 @@
 #define OFFSET_GET_PTR_A2                               0x03CE0F90UL//1.3.1.26
 #define OFFSET_MESSAGE_SENDER                           0x014AA5E0UL//1.3.1.26
 #define OFFSET_FAKE_MESSAGE                             0x0142696EUL//1.3.1.26
-#define OFFSET_DATA_HANDLER                             0x05753DC0UL//1.3.0.23
-#define OFFSET_INFINITE_AMMO                            0x00BFC853UL//1.3.0.23
+#define OFFSET_DATA_HANDLER                             0x0591F750UL//1.3.1.26
+#define OFFSET_INFINITE_AMMO                            0x00D19A26UL//1.3.1.26
 #define OFFSET_REDIRECTION                              0x01757B8EUL//1.3.0.23
 #define OFFSET_REDIRECTION_JMP                          0x017586D0UL//1.3.0.23
 #define OFFSET_REDIRECTION_RET                          0x01757B93UL//1.3.0.23
