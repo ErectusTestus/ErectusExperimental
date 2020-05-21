@@ -505,7 +505,7 @@ void OverlayMenu()
 					LargeButtonToggle("Hide NPCs in the Diehards Faction", &CustomExtraNPCSettings.HideDieHardFaction);
 					LargeButtonToggle("Hide NPCs in the Secret Service Faction", &CustomExtraNPCSettings.HideSecretServiceFaction);
 
-					LargeButtonToggle("Use NPC Blacklist", &CustomExtraNPCSettings.UseNPCBlacklist);
+					LargeButtonToggle("NPC Blacklist Enabled", &CustomExtraNPCSettings.UseNPCBlacklist);
 					if (ImGui::CollapsingHeader("NPC Blacklist"))
 					{
 						for (int i = 0; i < 64; i++)
