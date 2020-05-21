@@ -448,7 +448,9 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 			SetActorValueMaximum(0x000002C7, 100.0f, float(CustomLocalPlayerSettings.Intelligence), CustomLocalPlayerSettings.IntelligenceEnabled);
 			SetActorValueMaximum(0x000002C8, 100.0f, float(CustomLocalPlayerSettings.Luck), CustomLocalPlayerSettings.LuckEnabled);
 		}
-
+		
+		FreezeActionPoints(&FreezeApPage, &FreezeApPageValid, true);
+		
 		OnePositionKill(&OpkPage, &OpkPageValid, true);
 
 		if (OpkPageValid)
@@ -484,8 +486,6 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 			{
 				SetOpkData(OpkPage, false, false);
 			}
-
-			FreezeActionPoints(&FreezeApPage, &FreezeApPageValid, true);
 		}
 
 		if (CustomNukeCodeSettings.AutomaticNukeCodes)
