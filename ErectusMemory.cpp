@@ -1579,6 +1579,14 @@ bool UpdateBufferNPCList()
 			continue;
 		}
 		
+		if (CustomExtraNPCSettings.UseNPCBlacklist)
+		{
+			if (CheckFormidArray(ReferenceData.Formid, CustomExtraNPCSettings.NPCBlacklistEnabled, CustomExtraNPCSettings.NPCBlacklist, 64))
+			{
+				continue;
+			}
+		}
+		
 		float Distance = GetDistance(EntityData.Position, LocalPlayer.Position);
 		int NormalDistance = int(Distance * 0.01f);
 		if (NormalDistance > EnabledDistance) continue;
