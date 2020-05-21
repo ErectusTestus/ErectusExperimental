@@ -788,6 +788,27 @@ ExtraNPCSettings DefaultExtraNPCSettings
 	false,
 	false,
 	false,
+	false,
+	{
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+		false, false, false, false, false, false, false, false,
+	},
+	{
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	},
 };
 
 OverlaySettingsA PlayerSettings = DefaultPlayerSettings;
@@ -1887,6 +1908,16 @@ void GetExtraNPCSettings()
 	GetBool("ExtraNPCSettings", "HideCraterRaiderFaction", &CustomExtraNPCSettings.HideCraterRaiderFaction, &DefaultExtraNPCSettings.HideCraterRaiderFaction);
 	GetBool("ExtraNPCSettings", "HideDieHardFaction", &CustomExtraNPCSettings.HideDieHardFaction, &DefaultExtraNPCSettings.HideDieHardFaction);
 	GetBool("ExtraNPCSettings", "HideSecretServiceFaction", &CustomExtraNPCSettings.HideSecretServiceFaction, &DefaultExtraNPCSettings.HideSecretServiceFaction);
+	GetBool("ExtraNPCSettings", "UseNPCBlacklist", &CustomExtraNPCSettings.UseNPCBlacklist, &DefaultExtraNPCSettings.UseNPCBlacklist);
+	for (int i = 0; i < 64; i++)
+	{
+		char NPCBlacklistEnabledText[sizeof("NPCBlacklistEnabled63")];
+		char NPCBlacklistFormidText[sizeof("NPCBlacklist63")];
+		sprintf_s(NPCBlacklistEnabledText, "NPCBlacklistEnabled%d", i);
+		sprintf_s(NPCBlacklistFormidText, "NPCBlacklist%d", i);
+		GetBool("ExtraNPCSettings", NPCBlacklistEnabledText, &CustomExtraNPCSettings.NPCBlacklistEnabled[i], &DefaultExtraNPCSettings.NPCBlacklistEnabled[i]);
+		GetDWORD("ExtraNPCSettings", NPCBlacklistFormidText, &CustomExtraNPCSettings.NPCBlacklist[i], &DefaultExtraNPCSettings.NPCBlacklist[i]);
+	}
 }
 
 void SetExtraNPCSettings()
@@ -1895,6 +1926,16 @@ void SetExtraNPCSettings()
 	SetBool("ExtraNPCSettings", "HideCraterRaiderFaction", &CustomExtraNPCSettings.HideCraterRaiderFaction, &DefaultExtraNPCSettings.HideCraterRaiderFaction);
 	SetBool("ExtraNPCSettings", "HideDieHardFaction", &CustomExtraNPCSettings.HideDieHardFaction, &DefaultExtraNPCSettings.HideDieHardFaction);
 	SetBool("ExtraNPCSettings", "HideSecretServiceFaction", &CustomExtraNPCSettings.HideSecretServiceFaction, &DefaultExtraNPCSettings.HideSecretServiceFaction);
+	SetBool("ExtraNPCSettings", "UseNPCBlacklist", &CustomExtraNPCSettings.UseNPCBlacklist, &DefaultExtraNPCSettings.UseNPCBlacklist);
+	for (int i = 0; i < 64; i++)
+	{
+		char NPCBlacklistEnabledText[sizeof("NPCBlacklistEnabled63")];
+		char NPCBlacklistFormidText[sizeof("NPCBlacklist63")];
+		sprintf_s(NPCBlacklistEnabledText, "NPCBlacklistEnabled%d", i);
+		sprintf_s(NPCBlacklistFormidText, "NPCBlacklist%d", i);
+		SetBool("ExtraNPCSettings", NPCBlacklistEnabledText, &CustomExtraNPCSettings.NPCBlacklistEnabled[i], &DefaultExtraNPCSettings.NPCBlacklistEnabled[i]);
+		SetDWORD("ExtraNPCSettings", NPCBlacklistFormidText, &CustomExtraNPCSettings.NPCBlacklist[i], &DefaultExtraNPCSettings.NPCBlacklist[i]);
+	}
 }
 
 void ReadIniSettings()
