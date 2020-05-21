@@ -782,6 +782,14 @@ ChargenSettings DefaultChargenSettings
 	0.33f,
 };
 
+ExtraNPCSettings DefaultExtraNPCSettings
+{
+	false,
+	false,
+	false,
+	false,
+};
+
 OverlaySettingsA PlayerSettings = DefaultPlayerSettings;
 OverlaySettingsA NpcSettings = DefaultNpcSettings;
 OverlaySettingsB ContainerSettings = DefaultOverlaySettingsB;
@@ -811,6 +819,7 @@ HarvesterSettings CustomHarvesterSettings = DefaultHarvesterSettings;
 KnownRecipeSettings CustomKnownRecipeSettings = DefaultKnownRecipeSettings;
 MeleeSettings CustomMeleeSettings = DefaultMeleeSettings;
 ChargenSettings CustomChargenSettings = DefaultChargenSettings;
+ExtraNPCSettings CustomExtraNPCSettings = DefaultExtraNPCSettings;
 
 void GetDWORD(const char *Section, const char *Key, DWORD *Value, DWORD *Default)
 {
