@@ -46,8 +46,7 @@
 #define OFFSET_NOCLIP_C                                 0x01622771UL//1.3.1.26
 #define OFFSET_NOCLIP_D                                 0x016227A1UL//1.3.1.26
 #define OFFSET_ACTOR_VALUE                              0x016A2D60UL//1.3.1.26
-#define OFFSET_OPK_BEGIN                                0x0299381DUL//1.3.1.26
-#define OFFSET_OPK_END                                  0x0299382CUL//1.3.1.26
+#define OFFSET_OPK                                      0x0299381DUL//1.3.1.26
 #define OFFSET_AV_REGEN                                 0x016A311FUL//1.3.1.26
 #define OFFSET_SERVER_POSITION                          0x01496B85UL//1.3.1.26
 #define OFFSET_ENTITY_ID                                0x0511A000UL//1.3.1.26
