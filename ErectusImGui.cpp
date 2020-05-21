@@ -2228,6 +2228,12 @@ void OverlayMenu()
 				ImGui::EndTabItem();
 			}
 
+			if (ImGui::BeginTabItem("BitMsgWriter###BitMsgWriterTab"))
+			{
+				LargeButtonToggle("Message Sender Enabled", &AllowMessages);
+				ImGui::EndTabItem();
+			}
+			
 			ImGui::EndTabBar();
 		}
 
