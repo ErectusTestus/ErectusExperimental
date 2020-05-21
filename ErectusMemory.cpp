@@ -2692,6 +2692,16 @@ bool SendMessageToServer(void *Message, size_t Size)
 
 bool LootScrap()
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	DWORD64 LocalPlayerPtr = GetLocalPlayerPtr(true);
 	if (!Valid(LocalPlayerPtr))
 	{
@@ -2966,6 +2976,16 @@ bool CheckEnabledItem(DWORD Formid, DWORD64 EntityFlag, int NormalDistance)
 
 bool LootItems()
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	DWORD64 LocalPlayerPtr = GetLocalPlayerPtr(true);
 	if (!Valid(LocalPlayerPtr))
 	{
@@ -5808,6 +5828,16 @@ bool HarvestFlora(Entity EntityData, Reference ReferenceData, Entity LocalPlayer
 
 bool Harvester()
 {
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+	
 	bool UseNPCLooter = false;
 	if (NPCLooterSettings.EntityLooterEnabled)
 	{
