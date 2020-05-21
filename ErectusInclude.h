@@ -1227,6 +1227,9 @@ public:
 	bool HideCraterRaiderFaction;
 	bool HideDieHardFaction;
 	bool HideSecretServiceFaction;
+	bool UseNPCBlacklist;
+	bool NPCBlacklistEnabled[64];
+	DWORD NPCBlacklist[64];
 };
 
 //ErectusMain
