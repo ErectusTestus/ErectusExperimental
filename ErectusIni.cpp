@@ -1881,12 +1881,29 @@ void SetExperimentalSettings()
 	SetBool("ExperimentalOverlayFix", "ExperimentalOverlayFix", &ExperimentalOverlayFix, &ExperimentalOverlayFixDefault);
 }
 
+void GetExtraNPCSettings()
+{
+	GetBool("ExtraNPCSettings", "HideSettlerFaction", &CustomExtraNPCSettings.HideSettlerFaction, &DefaultExtraNPCSettings.HideSettlerFaction);
+	GetBool("ExtraNPCSettings", "HideCraterRaiderFaction", &CustomExtraNPCSettings.HideCraterRaiderFaction, &DefaultExtraNPCSettings.HideCraterRaiderFaction);
+	GetBool("ExtraNPCSettings", "HideDieHardFaction", &CustomExtraNPCSettings.HideDieHardFaction, &DefaultExtraNPCSettings.HideDieHardFaction);
+	GetBool("ExtraNPCSettings", "HideSecretServiceFaction", &CustomExtraNPCSettings.HideSecretServiceFaction, &DefaultExtraNPCSettings.HideSecretServiceFaction);
+}
+
+void SetExtraNPCSettings()
+{
+	SetBool("ExtraNPCSettings", "HideSettlerFaction", &CustomExtraNPCSettings.HideSettlerFaction, &DefaultExtraNPCSettings.HideSettlerFaction);
+	SetBool("ExtraNPCSettings", "HideCraterRaiderFaction", &CustomExtraNPCSettings.HideCraterRaiderFaction, &DefaultExtraNPCSettings.HideCraterRaiderFaction);
+	SetBool("ExtraNPCSettings", "HideDieHardFaction", &CustomExtraNPCSettings.HideDieHardFaction, &DefaultExtraNPCSettings.HideDieHardFaction);
+	SetBool("ExtraNPCSettings", "HideSecretServiceFaction", &CustomExtraNPCSettings.HideSecretServiceFaction, &DefaultExtraNPCSettings.HideSecretServiceFaction);
+}
+
 void ReadIniSettings()
 {
 	file.read(ini);
 	GetOverlaySettingsA("PlayerSettings", &PlayerSettings, &DefaultPlayerSettings);
 	GetOverlaySettingsA("NpcSettings", &NpcSettings, &DefaultNpcSettings);
 	GetLegendarySettings();
+	GetExtraNPCSettings();
 	GetOverlaySettingsB("ContainerSettings", &ContainerSettings, &DefaultOverlaySettingsB);
 	GetOverlaySettingsB("JunkSettings", &JunkSettings, &DefaultOverlaySettingsB);
 	GetOverlaySettingsB("PlanSettings", &PlanSettings, &DefaultOverlaySettingsB);
@@ -1922,6 +1939,7 @@ void WriteIniSettings()
 	SetOverlaySettingsA("PlayerSettings", &PlayerSettings, &DefaultPlayerSettings);
 	SetOverlaySettingsA("NpcSettings", &NpcSettings, &DefaultNpcSettings);
 	SetLegendarySettings();
+	SetExtraNPCSettings();
 	SetOverlaySettingsB("ContainerSettings", &ContainerSettings, &DefaultOverlaySettingsB);
 	SetOverlaySettingsB("JunkSettings", &JunkSettings, &DefaultOverlaySettingsB);
 	SetOverlaySettingsB("PlanSettings", &PlanSettings, &DefaultOverlaySettingsB);
