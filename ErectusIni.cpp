@@ -342,7 +342,7 @@ LocalPlayerSettings DefaultLocalPlayerSettings
 {
 	false,
 	false,
-	511,
+	524287,
 	false,
 	0.1f,
 	false,
@@ -1452,7 +1452,7 @@ void GetLocalPlayerSettings()
 {
 	GetBool("LocalPlayerSettings", "PositionSpoofingEnabled", &CustomLocalPlayerSettings.PositionSpoofingEnabled, &DefaultLocalPlayerSettings.PositionSpoofingEnabled);
 	GetBool("LocalPlayerSettings", "DrawPositionSpoofingEnabled", &CustomLocalPlayerSettings.DrawPositionSpoofingEnabled, &DefaultLocalPlayerSettings.DrawPositionSpoofingEnabled);
-	GetSliderInt("LocalPlayerSettings", "PositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, &DefaultLocalPlayerSettings.PositionSpoofingHeight, -511, 511);
+	GetSliderInt("LocalPlayerSettings", "PositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, &DefaultLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287);
 	GetBool("LocalPlayerSettings", "NoclipEnabled", &CustomLocalPlayerSettings.NoclipEnabled, &DefaultLocalPlayerSettings.NoclipEnabled);
 	GetSliderFloat("LocalPlayerSettings", "NoclipSpeed", &CustomLocalPlayerSettings.NoclipSpeed, &DefaultLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f);
 	GetBool("LocalPlayerSettings", "ClientState", &CustomLocalPlayerSettings.ClientState, &DefaultLocalPlayerSettings.ClientState);
@@ -1480,7 +1480,7 @@ void SetLocalPlayerSettings()
 {
 	SetBool("LocalPlayerSettings", "PositionSpoofingEnabled", &CustomLocalPlayerSettings.PositionSpoofingEnabled, &DefaultLocalPlayerSettings.PositionSpoofingEnabled);
 	SetBool("LocalPlayerSettings", "DrawPositionSpoofingEnabled", &CustomLocalPlayerSettings.DrawPositionSpoofingEnabled, &DefaultLocalPlayerSettings.DrawPositionSpoofingEnabled);
-	SetSliderInt("LocalPlayerSettings", "PositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, &DefaultLocalPlayerSettings.PositionSpoofingHeight, -511, 511);
+	SetSliderInt("LocalPlayerSettings", "PositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, &DefaultLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287);
 	SetBool("LocalPlayerSettings", "NoclipEnabled", &CustomLocalPlayerSettings.NoclipEnabled, &DefaultLocalPlayerSettings.NoclipEnabled);
 	SetSliderFloat("LocalPlayerSettings", "NoclipSpeed", &CustomLocalPlayerSettings.NoclipSpeed, &DefaultLocalPlayerSettings.NoclipSpeed, 0.0f, 2.0f);
 	SetBool("LocalPlayerSettings", "ClientState", &CustomLocalPlayerSettings.ClientState, &DefaultLocalPlayerSettings.ClientState);
