@@ -249,7 +249,11 @@ public:
 	DWORD64 KeywordArrayData00C0;//0xC0
 	BYTE Padding00B8[0x19];
 	BYTE OMODFlag;//0xE1
-	BYTE Padding00E2[0x7E];
+	BYTE Padding00E2[0xE];
+	DWORD64 FactionArrayPtr;//0xF0
+	BYTE Padding00F8[0x8];
+	int FactionArraySize;//0x100
+	BYTE Padding0104[0x5C];
 	DWORD64 NamePtr0160;//0x160
 	BYTE Padding0168[0x48];
 	DWORD64 KeywordArrayData01B0;//0x1B0
@@ -1216,6 +1220,15 @@ public:
 	float Large;
 };
 
+class ExtraNPCSettings
+{
+public:
+	bool HideSettlerFaction;
+	bool HideCraterRaiderFaction;
+	bool HideDieHardFaction;
+	bool HideSecretServiceFaction;
+};
+
 //ErectusMain
 extern void Close();
 extern void SetOverlayMenu();
@@ -1477,3 +1490,4 @@ extern HarvesterSettings CustomHarvesterSettings;
 extern KnownRecipeSettings CustomKnownRecipeSettings;
 extern MeleeSettings CustomMeleeSettings;
 extern ChargenSettings CustomChargenSettings;
+extern ExtraNPCSettings CustomExtraNPCSettings;
