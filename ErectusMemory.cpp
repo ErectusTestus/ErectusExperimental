@@ -1058,6 +1058,60 @@ bool IsTreasureMap(DWORD Formid)
 	}
 }
 
+bool CheckFactionFormid(DWORD Formid)
+{
+	switch (Formid)
+	{
+	case 0x003FC008://W05_SettlerFaction
+		return CustomExtraNPCSettings.HideSettlerFaction;
+	case 0x003FE94A://W05_CraterRaiderFaction
+		return CustomExtraNPCSettings.HideCraterRaiderFaction;
+	case 0x003FBC00://W05_DieHardFaction
+		return CustomExtraNPCSettings.HideDieHardFaction;
+	case 0x005427B2://W05_SecretServiceFaction
+		return CustomExtraNPCSettings.HideSecretServiceFaction;
+	default:
+		return false;
+	}
+}
+
+bool BlacklistedNPCFaction(Reference ReferenceData)
+{
+	if (!Valid(ReferenceData.FactionArrayPtr) || !ReferenceData.FactionArraySize || ReferenceData.FactionArraySize > 0x7FFF)
+	{
+		return false;
+	}
+
+	DWORD64 *FactionArray = new DWORD64[ReferenceData.FactionArraySize * 2];
+	if (!RPM(ReferenceData.FactionArrayPtr, &*FactionArray, ReferenceData.FactionArraySize * 2 * sizeof(DWORD64)))
+	{
+		delete[]FactionArray;
+		FactionArray = nullptr;
+		return false;
+	}
+
+	bool BlacklistedFactionFound = false;
+	for (int i = 0; i < ReferenceData.FactionArraySize; i++)
+	{
+		if (!Valid(FactionArray[i * 2]))
+		{
+			continue;
+		}
+
+		DWORD Formid;
+		if (!RPM(FactionArray[i * 2] + 0x20, &Formid, sizeof(Formid))) continue;
+		if (CheckFactionFormid(Formid))
+		{
+			BlacklistedFactionFound = true;
+			break;
+		}
+	}
+
+	delete[]FactionArray;
+	FactionArray = nullptr;
+	return BlacklistedFactionFound;
+}
+
 bool CheckReferenceItem(Reference ReferenceData)
 {
 	switch (ReferenceData.vtable - Exe)
@@ -1520,6 +1574,11 @@ bool UpdateBufferNPCList()
 		GetCustomEntityData(ReferenceData, &EntityFlag, &EntityNamePtr, &EnabledDistance, CustomScrapLooterSettings.ScrapOverrideEnabled, CustomHarvesterSettings.HarvesterOverrideEnabled);
 		if (EntityFlag & CUSTOM_ENTRY_INVALID) continue;
 
+		if (BlacklistedNPCFaction(ReferenceData))
+		{
+			continue;
+		}
+		
 		float Distance = GetDistance(EntityData.Position, LocalPlayer.Position);
 		int NormalDistance = int(Distance * 0.01f);
 		if (NormalDistance > EnabledDistance) continue;
