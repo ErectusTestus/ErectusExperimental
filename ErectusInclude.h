@@ -1332,6 +1332,9 @@ extern bool ThreadDestructionQueued;
 extern bool ThreadDestructionState;
 extern int ThreadDestructionCounter;
 
+extern bool PositionSpoofingToggle;
+extern bool NoclipToggle;
+
 //ErectusMemory
 extern CustomEntry *CustomEntityList;
 extern int CustomEntityListSize;
