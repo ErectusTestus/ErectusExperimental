@@ -4717,13 +4717,26 @@ bool SendDamage(DWORD WeaponId, BYTE *ShotsHit, BYTE *ShotsFired, BYTE Count)
 		HitsData[i].bTargetWasDead = 0;
 		HitsData[i].Padding0037 = 0;
 
-		if (*ShotsHit == 0 || *ShotsHit == 255)
+		if (CustomTargetSettings.SendDamageMax < 10)
 		{
-			*ShotsHit = 1;
+			if (GetRangedInt(1, 10) <= int(10 - CustomTargetSettings.SendDamageMax))
+			{
+				if (*ShotsHit == 0 || *ShotsHit == 255)
+				{
+					*ShotsHit = 1;
+				}
+				else
+				{
+					*ShotsHit += 1;
+				}
+			}
+			else
+			{
+				*ShotsHit = 1;
+			}
 		}
 		else
 		{
-			//*ShotsHit += 1; (Changed in 1.3.1.26?)
 			*ShotsHit = 1;
 		}
 
