@@ -1460,6 +1460,7 @@ extern char *GetFavoritedWeaponText(BYTE Index);
 extern bool Harvester();
 extern bool MeleeAttack();
 extern bool ChargenEditing();
+extern bool MessagePatcher(bool State);
 
 //ErectusIni
 extern void ReadIniSettings();
