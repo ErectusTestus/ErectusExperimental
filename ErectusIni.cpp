@@ -1890,18 +1890,6 @@ void SetChargenSettings()
 	SetSliderFloat("ChargenSettings", "Large", &CustomChargenSettings.Large, &DefaultChargenSettings.Large, 0.0f, 1.0f);
 }
 
-void GetExperimentalSettings()
-{
-	bool ExperimentalOverlayFixDefault = false;
-	GetBool("ExperimentalOverlayFix", "ExperimentalOverlayFix", &ExperimentalOverlayFix, &ExperimentalOverlayFixDefault);
-}
-
-void SetExperimentalSettings()
-{
-	bool ExperimentalOverlayFixDefault = false;
-	SetBool("ExperimentalOverlayFix", "ExperimentalOverlayFix", &ExperimentalOverlayFix, &ExperimentalOverlayFixDefault);
-}
-
 void GetExtraNPCSettings()
 {
 	GetBool("ExtraNPCSettings", "HideSettlerFaction", &CustomExtraNPCSettings.HideSettlerFaction, &DefaultExtraNPCSettings.HideSettlerFaction);
@@ -1938,6 +1926,30 @@ void SetExtraNPCSettings()
 	}
 }
 
+void GetBitMsgWriterSettings()
+{
+	bool AllowMessagesDefault = false;
+	GetBool("BitMsgWriter", "AllowMessages", &AllowMessages, &AllowMessagesDefault);
+}
+
+void SetBitMsgWriterSettings()
+{
+	bool AllowMessagesDefault = false;
+	SetBool("BitMsgWriter", "AllowMessages", &AllowMessages, &AllowMessagesDefault);
+}
+
+void GetExperimentalSettings()
+{
+	bool ExperimentalOverlayFixDefault = false;
+	GetBool("ExperimentalOverlayFix", "ExperimentalOverlayFix", &ExperimentalOverlayFix, &ExperimentalOverlayFixDefault);
+}
+
+void SetExperimentalSettings()
+{
+	bool ExperimentalOverlayFixDefault = false;
+	SetBool("ExperimentalOverlayFix", "ExperimentalOverlayFix", &ExperimentalOverlayFix, &ExperimentalOverlayFixDefault);
+}
+
 void ReadIniSettings()
 {
 	file.read(ini);
@@ -1970,6 +1982,7 @@ void ReadIniSettings()
 	GetNukeCodeSettings();
 	GetMeleeSettings();
 	GetChargenSettings();
+	GetBitMsgWriterSettings();
 	GetExperimentalSettings();
 	file.write(ini, true);
 }
@@ -2006,6 +2019,7 @@ void WriteIniSettings()
 	SetNukeCodeSettings();
 	SetMeleeSettings();
 	SetChargenSettings();
+	SetBitMsgWriterSettings();
 	SetExperimentalSettings();
 	file.write(ini, true);
 }
