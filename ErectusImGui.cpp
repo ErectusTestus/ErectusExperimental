@@ -499,6 +499,31 @@ void OverlayMenu()
 					ImGui::ColorEdit3("###DeadThreeStarColor", CustomLegendarySettings.DeadThreeStarColor);
 					if (ImGui::IsItemActive()) AllowDrag = false;
 					ValidateRGB(CustomLegendarySettings.DeadThreeStarColor);
+					
+					LargeButtonToggle("Hide NPCs in the Settler Faction", &CustomExtraNPCSettings.HideSettlerFaction);
+					LargeButtonToggle("Hide NPCs in the Crater Raider Faction", &CustomExtraNPCSettings.HideCraterRaiderFaction);
+					LargeButtonToggle("Hide NPCs in the Diehards Faction", &CustomExtraNPCSettings.HideDieHardFaction);
+					LargeButtonToggle("Hide NPCs in the Secret Service Faction", &CustomExtraNPCSettings.HideSecretServiceFaction);
+
+					LargeButtonToggle("Use NPC Blacklist", &CustomExtraNPCSettings.UseNPCBlacklist);
+					if (ImGui::CollapsingHeader("NPC Blacklist"))
+					{
+						for (int i = 0; i < 64; i++)
+						{
+							char NPCBlacklistEnabledText[sizeof("NPC Blacklist: 63")];
+							char NPCBlacklistLabelText[sizeof("###NPCBlacklist63")];
+							sprintf_s(NPCBlacklistEnabledText, "NPC Blacklist: %d", i);
+							sprintf_s(NPCBlacklistLabelText, "###NPCBlacklist%d", i);
+							ButtonToggle(NPCBlacklistEnabledText, &CustomExtraNPCSettings.NPCBlacklistEnabled[i]);
+							ImGui::SameLine(235.0f);
+							char FormidText[sizeof("00000000")];
+							sprintf_s(FormidText, "%08lX", CustomExtraNPCSettings.NPCBlacklist[i]);
+							ImGui::SetNextItemWidth(224.0f);
+							ImGui::InputText(NPCBlacklistLabelText, FormidText, sizeof(FormidText), ImGuiInputTextFlags_CharsHexadecimal);
+							if (ImGui::IsItemActive()) AllowDrag = false;
+							sscanf_s(FormidText, "%08lX", &CustomExtraNPCSettings.NPCBlacklist[i]);
+						}
+					}
 				}
 
 				if (ImGui::CollapsingHeader("Container ESP Settings"))
