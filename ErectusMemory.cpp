@@ -3495,6 +3495,10 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 	BYTE PageJmpOn[] = { 0x48, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xE3 };
 	BYTE PageJmpOff[] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC };
 	BYTE PageJmpCheck[sizeof(PageJmpOff)];
+	
+	BYTE RedirectionOn[] = { 0xE9, 0x69, 0xFE, 0xFF, 0xFF };
+	BYTE RedirectionOff[] = { 0x48, 0x8B, 0x5C, 0x24, 0x50 };
+	BYTE RedirectionCheck[sizeof(RedirectionOff)];
 
 	if (!RPM(Exe + OFFSET_REDIRECTION_JMP, &PageJmpCheck, sizeof(PageJmpCheck))) return false;
 
@@ -3521,7 +3525,7 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 	{
 		TargetLocking TargetLockingData;
 		TargetLockingData.TargetLockingPtr = TargetLockingPtr;
-		DWORD64 OriginalFunction = Exe + OFFSET_REDIRECTION + 0x5;
+		DWORD64 OriginalFunction = Exe + OFFSET_REDIRECTION + sizeof(RedirectionOff);
 		DWORD64 OriginalFunctionCheck;
 		if (!RPM(*TargetingPage + 0x30, &OriginalFunctionCheck, sizeof(OriginalFunctionCheck))) return false;
 		if (OriginalFunctionCheck != OriginalFunction)
@@ -3555,10 +3559,6 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 	{
 		TargetValid = false;
 	}
-
-	BYTE RedirectionOn[] = { 0xE9, 0x69, 0xFE, 0xFF, 0xFF };
-	BYTE RedirectionOff[] = { 0x48, 0x8B, 0x5C, 0x24, 0x50 };
-	BYTE RedirectionCheck[sizeof(RedirectionOff)];
 
 	bool Redirection = RPM(Exe + OFFSET_REDIRECTION, &RedirectionCheck, sizeof(RedirectionCheck));
 
@@ -3872,15 +3872,14 @@ bool OnePositionKill(DWORD64 *OpkPage, bool *OpkPageValid, bool State)
 
 	BYTE OpkOn[] = { 0x48, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xE0, 0xCC, 0xCC, 0xCC };
 	BYTE OpkOff[] = { 0x0F, 0x10, 0x87, 0x90, 0x04, 0x00, 0x00, 0x0F, 0x58, 0x45, 0xA7, 0x0F, 0x29, 0x45, 0xF7 };
-
 	BYTE OpkCheck[sizeof(OpkOff)];
 
-	if (!RPM(Exe + OFFSET_OPK_BEGIN, &OpkCheck, sizeof(OpkCheck)))
+	if (!RPM(Exe + OFFSET_OPK, &OpkCheck, sizeof(OpkCheck)))
 	{
 		return false;
 	}
 
-	DWORD64 OriginalFunction = Exe + OFFSET_OPK_END;
+	DWORD64 OriginalFunction = Exe + OFFSET_OPK + sizeof(OpkOff);
 	memcpy(&OpkOn[2], &*OpkPage, sizeof(DWORD64));
 
 	DWORD64 PageCheck;
@@ -3891,7 +3890,7 @@ bool OnePositionKill(DWORD64 *OpkPage, bool *OpkPageValid, bool State)
 		Opk Buffer;
 		if (!RPM(PageCheck, &Buffer, sizeof(Buffer))) return false;
 		if (Buffer.OriginalFunction != OriginalFunction) return false;
-		if (!WPM(Exe + OFFSET_OPK_BEGIN, &OpkOff, sizeof(OpkOff))) return false;
+		if (!WPM(Exe + OFFSET_OPK, &OpkOff, sizeof(OpkOff))) return false;
 		FreeEx(PageCheck);
 	}
 
@@ -3911,7 +3910,7 @@ bool OnePositionKill(DWORD64 *OpkPage, bool *OpkPageValid, bool State)
 			memset(OpkData.OpkNpcPosition, 0x00, sizeof(OpkData.OpkNpcPosition));
 
 			if (!WPM(*OpkPage, &OpkData, sizeof(OpkData))) return false;
-			if (!WPM(Exe + OFFSET_OPK_BEGIN, &OpkOn, sizeof(OpkOn))) return false;
+			if (!WPM(Exe + OFFSET_OPK, &OpkOn, sizeof(OpkOn))) return false;
 			*OpkPageValid = true;
 		}
 	}
@@ -3919,7 +3918,7 @@ bool OnePositionKill(DWORD64 *OpkPage, bool *OpkPageValid, bool State)
 	{
 		if (PageCheck == *OpkPage)
 		{
-			WPM(Exe + OFFSET_OPK_BEGIN, &OpkOff, sizeof(OpkOff));
+			WPM(Exe + OFFSET_OPK, &OpkOff, sizeof(OpkOff));
 		}
 
 		if (*OpkPage)
