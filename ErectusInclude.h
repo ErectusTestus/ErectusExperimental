@@ -1403,6 +1403,8 @@ extern bool TargetLockingValid;
 extern float TargetLockingClosestDegrees;
 extern DWORD64 TargetLockingClosestPtr;
 
+extern bool AllowMessages;
+
 extern DWORD64 GetAddress(DWORD Formid);
 extern DWORD64 GetPtr(DWORD Formid);
 
