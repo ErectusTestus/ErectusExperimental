@@ -2791,6 +2791,11 @@ bool LootScrap()
 		Entity EntityData;
 		if (!RPM(BufferList[i], &EntityData, sizeof(EntityData))) continue;
 		if (!Valid(EntityData.ReferencePtr)) continue;
+		
+		if (EntityData.SpawnFlag != 0x02)
+		{
+			continue;
+		}
 
 		Reference ReferenceData;
 		if (!RPM(EntityData.ReferencePtr, &ReferenceData, sizeof(ReferenceData))) continue;
@@ -3079,6 +3084,11 @@ bool LootItems()
 		if (!RPM(BufferList[i], &EntityData, sizeof(EntityData))) continue;
 		if (!Valid(EntityData.ReferencePtr)) continue;
 
+		if (EntityData.SpawnFlag != 0x02)
+		{
+			continue;
+		}
+		
 		Reference ReferenceData;
 		if (!RPM(EntityData.ReferencePtr, &ReferenceData, sizeof(ReferenceData))) continue;
 
