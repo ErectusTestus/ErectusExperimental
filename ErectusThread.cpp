@@ -14,6 +14,9 @@ bool MultihackThreadActive = false;
 bool HarvesterThreadActive = false;
 bool KnownRecipeThreadActive = false;
 
+bool PositionSpoofingToggle = false;
+bool NoclipToggle = false;
+
 DWORD WINAPI BufferEntityListThread(LPVOID lpParameter)
 {
 	UNREFERENCED_PARAMETER(lpParameter);
@@ -298,9 +301,7 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 	UNREFERENCED_PARAMETER(lpParameter);
 
 	bool PositionSpoofingPress = false;
-
 	bool NoclipPress = false;
-	bool NoclipToggle = false;
 
 	int ClientStateCounter = 0;
 
@@ -338,14 +339,26 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 	{
 		if (DoubleKeyPress(VK_CONTROL, 'L', &PositionSpoofingPress))
 		{
-			if (CustomLocalPlayerSettings.PositionSpoofingEnabled)
+			if (PositionSpoofingToggle)
 			{
-				CustomLocalPlayerSettings.PositionSpoofingEnabled = false;
+				PositionSpoofingToggle = false;
 			}
 			else
 			{
-				CustomLocalPlayerSettings.PositionSpoofingEnabled = true;
+				PositionSpoofingToggle = true;
+				if (CustomLocalPlayerSettings.PositionSpoofingEnabled)
+				{
+					if (CustomLocalPlayerSettings.ClientState)
+					{
+						SetClientState(2);
+					}
+				}
 			}
+		}
+
+		if (!CustomLocalPlayerSettings.PositionSpoofingEnabled)
+		{
+			PositionSpoofingToggle = false;
 		}
 
 		if (DoubleKeyPress(VK_CONTROL, 'Y', &NoclipPress))
@@ -365,6 +378,11 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 					}
 				}
 			}
+		}
+
+		if (!CustomLocalPlayerSettings.NoclipEnabled)
+		{
+			NoclipToggle = false;
 		}
 
 		if (DoubleKeyPress(VK_CONTROL, 'B', &OpkPlayersPress))
@@ -413,11 +431,7 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 			}
 		}
 
-		if (!NoclipToggle || !CustomLocalPlayerSettings.NoclipEnabled)
-		{
-			NoclipToggle = false;
-		}
-		else if (NoclipToggle && CustomLocalPlayerSettings.NoclipEnabled)
+		if (PositionSpoofingToggle || NoclipToggle)
 		{
 			if (CustomLocalPlayerSettings.AutomaticClientState)
 			{
@@ -430,7 +444,7 @@ DWORD WINAPI MultihackThread(LPVOID lpParameter)
 			}
 		}
 
-		PositionSpoofing(CustomLocalPlayerSettings.PositionSpoofingEnabled);
+		PositionSpoofing(PositionSpoofingToggle);
 
 		Noclip(NoclipToggle);
 
