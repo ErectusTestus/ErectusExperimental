@@ -394,13 +394,15 @@ class TransferMessage
 public:
 	DWORD64 vtable;//0x0
 	DWORD SrcFormid;//0x8
-	DWORD DstFormid;//0xC
-	DWORD UnknownId;//0x10
+	DWORD UnknownId;//0xC
+	DWORD DstFormid;//0x10
 	DWORD ItemId;//0x14
 	int Count;//0x18
 	DWORD UnknownA;//0x1C
 	BYTE UnknownB;//0x20
 	BYTE UnknownC;//0x21
+	BYTE UnknownD;//0x22
+	BYTE UnknownE;//0x23
 };
 
 class ActorValueInformation
