@@ -1721,9 +1721,9 @@ void OverlayMenu()
 					ButtonToggle("Draw Position Status###LocalPlayerDrawPositionSpoofingEnabled", &CustomLocalPlayerSettings.DrawPositionSpoofingEnabled);
 					ImGui::SameLine(235.0f);
 					ImGui::SetNextItemWidth(224.0f);
-					ImGui::SliderInt("###LocalPlayerPositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, -511, 511, "Spoofed Height: %d");
+					ImGui::SliderInt("###LocalPlayerPositionSpoofingHeight", &CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287, "Spoofed Height: %d");
 					if (ImGui::IsItemActive()) AllowDrag = false;
-					ValidateInt(&CustomLocalPlayerSettings.PositionSpoofingHeight, -511, 511);
+					ValidateInt(&CustomLocalPlayerSettings.PositionSpoofingHeight, -524287, 524287);
 
 					ButtonToggle("Noclip (Keybind CTRL+Y)###NoclipEnabled", &CustomLocalPlayerSettings.NoclipEnabled);
 					ImGui::SameLine(235.0f);
