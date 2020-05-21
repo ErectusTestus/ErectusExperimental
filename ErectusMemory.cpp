@@ -3415,7 +3415,7 @@ bool DamageRedirection(DWORD64 *TargetingPage, bool *TargetingPageValid, bool Is
 	memcpy(&PageCheck, &PageJmpCheck[2], sizeof(PageCheck));
 	if (Valid(PageCheck) && PageCheck != *TargetingPage)
 	{
-		BYTE PageOpcode[] = { 0x48, 0xBB, 0x00, 0x00, 0
+		BYTE PageOpcode[] = { 0x48, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x00 };
 		BYTE PageOpcodeCheck[sizeof(PageOpcode)];
 		if (!RPM(PageCheck, &PageOpcodeCheck, sizeof(PageOpcodeCheck))) return false;
 		if (memcmp(PageOpcodeCheck, PageOpcode, sizeof(PageOpcode))) return false;
