@@ -142,11 +142,15 @@ void ResetProcessData(bool ClearProcessError, int NewProcessListSize)
 
 	if (ThreadCreationState)
 	{
+		bool AreThreadsActive = false;
+
 		while (!ThreadDestruction())
 		{
 			ThreadDestructionCounter++;
 			if (ThreadDestructionCounter > 14400)
 			{
+				AreThreadsActive = true;
+
 				if (NewProcessListSize)
 				{
 					Close();
@@ -156,6 +160,11 @@ void ResetProcessData(bool ClearProcessError, int NewProcessListSize)
 			}
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+
+		if (!AreThreadsActive)
+		{
+			MessagePatcher(false);
 		}
 	}
 
