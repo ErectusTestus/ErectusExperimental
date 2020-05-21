@@ -4298,13 +4298,15 @@ bool TransferItems(DWORD SourceFormid, DWORD DestinationFormid)
 		TransferMessage TransferMessageData;
 		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
 		TransferMessageData.SrcFormid = SourceFormid;
-		TransferMessageData.DstFormid = DestinationFormid;
 		TransferMessageData.UnknownId = 0xE0001F7A;
+		TransferMessageData.DstFormid = DestinationFormid;
 		TransferMessageData.ItemId = ItemData[i].ItemId;
 		TransferMessageData.Count = Count;
-		TransferMessageData.UnknownA = 0;
-		TransferMessageData.UnknownB = 1;
-		TransferMessageData.UnknownC = 0;
+		TransferMessageData.UnknownA = 0x00000000;
+		TransferMessageData.UnknownB = 0x00;
+		TransferMessageData.UnknownC = 0x01;
+		TransferMessageData.UnknownD = 0x00;
+		TransferMessageData.UnknownE = 0x02;
 		SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
 	}
 
@@ -5491,13 +5493,15 @@ bool TransferEntityItems(Entity EntityData, Reference ReferenceData, Entity Loca
 		TransferMessage TransferMessageData;
 		TransferMessageData.vtable = Exe + VTABLE_REQUESTTRANSFERITEMMSG;
 		TransferMessageData.SrcFormid = EntityData.Formid;
-		TransferMessageData.DstFormid = LocalPlayer.Formid;
 		TransferMessageData.UnknownId = 0xE0001F7A;
+		TransferMessageData.DstFormid = LocalPlayer.Formid;
 		TransferMessageData.ItemId = ItemData[i].ItemId;
 		TransferMessageData.Count = Count;
-		TransferMessageData.UnknownA = 0;
-		TransferMessageData.UnknownB = 1;
-		TransferMessageData.UnknownC = 0;
+		TransferMessageData.UnknownA = 0x00000000;
+		TransferMessageData.UnknownB = 0x00;
+		TransferMessageData.UnknownC = 0x01;
+		TransferMessageData.UnknownD = 0x00;
+		TransferMessageData.UnknownE = 0x02;
 		SendMessageToServer(&TransferMessageData, sizeof(TransferMessageData));
 	}
 
