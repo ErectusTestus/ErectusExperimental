@@ -6140,3 +6140,79 @@ bool ChargenEditing()
 
 	return true;
 }
+
+bool CreateProjectile(DWORD ItemId, float *Position, float *Rotation)
+{
+	if (!MessagePatcher(AllowMessages))
+	{
+		return false;
+	}
+
+	if (!AllowMessages)
+	{
+		return false;
+	}
+
+	DWORD64 AllocAddress = AllocEx(sizeof(ExecutionProjectile));
+	if (AllocAddress == 0) return false;
+
+	CreateProjectileMessageClient CreateProjectileMessageClientData;
+	CreateProjectileMessageClientData.vtable = Exe + VTABLE_CREATEPROJECTILEMESSAGECLIENT;
+	CreateProjectileMessageClientData.PositionX = Position[0];
+	CreateProjectileMessageClientData.PositionY = Position[1];
+	CreateProjectileMessageClientData.PositionZ = Position[2];
+	CreateProjectileMessageClientData.RotationArrayPtr = AllocAddress + 0xD0;
+	CreateProjectileMessageClientData.RotationArrayEnd = AllocAddress + 0xD0 + sizeof(float[3]);
+	CreateProjectileMessageClientData.RotationArrayPad = AllocAddress + 0xD0 + sizeof(float[3]);
+	CreateProjectileMessageClientData.ItemId = ItemId;
+	CreateProjectileMessageClientData.UnknownA = 0xFFFFFFFF;
+	CreateProjectileMessageClientData.UnknownB = 0xFFFFFFFF;
+	CreateProjectileMessageClientData.UnknownC = 0x00000000;
+	CreateProjectileMessageClientData.UnknownD = 1.0f;
+	CreateProjectileMessageClientData.UnknownE = 0x00000000;
+	CreateProjectileMessageClientData.UnknownArrayPtrA = AllocAddress + 0xE0;
+	CreateProjectileMessageClientData.UnknownArrayEndA = AllocAddress + 0xE0 + sizeof(WORD[1]);
+	CreateProjectileMessageClientData.UnknownArrayPadA = AllocAddress + 0xE0 + sizeof(WORD[1]);
+	CreateProjectileMessageClientData.UnknownF = 0xFF;
+	CreateProjectileMessageClientData.UnknownArrayPtrB = AllocAddress + 0xF0;
+	CreateProjectileMessageClientData.UnknownArrayEndB = AllocAddress + 0xF0 + sizeof(BYTE[1]);
+	CreateProjectileMessageClientData.UnknownArrayPadB = AllocAddress + 0xF0 + sizeof(BYTE[1]);
+	CreateProjectileMessageClientData.UnknownG = 0x00;
+
+	ExecutionProjectile ExecutionProjectileData;
+	ExecutionProjectileData.Address = Exe + OFFSET_MESSAGE_SENDER;
+	ExecutionProjectileData.RCX = AllocAddress + 0x40;
+	ExecutionProjectileData.RDX = 0;
+	memcpy(ExecutionProjectileData.Message, &CreateProjectileMessageClientData, sizeof(CreateProjectileMessageClientData));
+	ExecutionProjectileData.RotationX = Rotation[0];
+	ExecutionProjectileData.RotationY = Rotation[1];
+	ExecutionProjectileData.RotationZ = Rotation[2];
+	ExecutionProjectileData.UnknownArrayValueA = WORD(GetRangedInt(999, 9999));
+	ExecutionProjectileData.UnknownArrayValueB = 0x01;
+
+	if (!WPM(AllocAddress, &ExecutionProjectileData, sizeof(ExecutionProjectileData)))
+	{
+		FreeEx(AllocAddress);
+		return false;
+	}
+
+	DWORD64 ParamAddress = AllocAddress + sizeof(ExecutionProjectile::ASM);
+	HANDLE Thread = CreateRemoteThread(Handle, NULL, 0, LPTHREAD_START_ROUTINE(AllocAddress), LPVOID(ParamAddress), 0, 0);
+
+	if (Thread == NULL)
+	{
+		FreeEx(AllocAddress);
+		return false;
+	}
+
+	DWORD ThreadResult = WaitForSingleObject(Thread, 3000);
+	CloseHandle(Thread);
+
+	if (ThreadResult == WAIT_TIMEOUT)
+	{
+		return false;
+	}
+
+	FreeEx(AllocAddress);
+	return true;
+}
