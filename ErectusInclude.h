@@ -1519,6 +1519,7 @@ extern bool Harvester();
 extern bool MeleeAttack();
 extern bool ChargenEditing();
 extern bool MessagePatcher(bool State);
+extern bool CreateForwardProjectile(DWORD ItemId);
 
 //ErectusIni
 extern void ReadIniSettings();
