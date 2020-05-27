@@ -6216,3 +6216,24 @@ bool CreateProjectile(DWORD ItemId, float *Position, float *Rotation)
 	FreeEx(AllocAddress);
 	return true;
 }
+
+bool CreateForwardProjectile(DWORD ItemId)
+{
+	if (ItemId == 0)
+	{
+		return false;
+	}
+
+	DWORD64 CameraPtr = GetCameraPtr();
+	if (!Valid(CameraPtr)) return false;
+
+	Camera CameraData;
+	if (!RPM(CameraPtr, &CameraData, sizeof(CameraData))) return false;
+
+	float Rotation[3];
+	Rotation[0] = -atan2f(CameraData.Forward[2], sqrtf(powf(CameraData.Forward[0], 2.0f) + powf(CameraData.Forward[1], 2.0f)));
+	Rotation[1] = 0.0f;
+	Rotation[2] = -atan2f(-CameraData.Forward[0], CameraData.Forward[1]);
+
+	return CreateProjectile(ItemId, CameraData.Origin, Rotation);
+}
