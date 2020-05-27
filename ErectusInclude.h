@@ -76,6 +76,7 @@
 #define VTABLE_REQUESTTELEPORTTOLOCATIONMSG             0x03B23D60UL//1.3.1.26
 #define VTABLE_CLIENTSTATEMSG                           0x03B23940UL//1.3.1.26
 #define VTABLE_REQUESTHITSONACTORS                      0x03B1B700UL//1.3.1.26
+#define VTABLE_CREATEPROJECTILEMESSAGECLIENT            0x03AE8A38UL//1.3.1.26
 
 //CustomEntry Flags
 #define CUSTOM_ENTRY_DEFAULT                            0x0000000000000000ULL
@@ -570,6 +571,35 @@ public:
 	DWORD64 ModDataPtr;//0x10
 };
 
+class CreateProjectileMessageClient
+{
+public:
+	DWORD64 vtable;//0x0
+	float PositionX;//0x8
+	float PositionY;//0xC
+	float PositionZ;//0x10
+	BYTE Padding0014[0x4];
+	DWORD64 RotationArrayPtr;//0x18 (float, XYZ)
+	DWORD64 RotationArrayEnd;//0x20
+	DWORD64 RotationArrayPad;//0x28
+	DWORD ItemId;//0x30
+	DWORD UnknownA;//0x34 (0xFFFFFFFF)
+	DWORD UnknownB;//0x38 (0xFFFFFFFF)
+	DWORD UnknownC;//0x3C (0x00000000)
+	float UnknownD;//0x40 (1.0f)
+	DWORD UnknownE;//0x44 (0x00000000)
+	DWORD64 UnknownArrayPtrA;//0x48 (WORD, 0xFFFF)
+	DWORD64 UnknownArrayEndA;//0x50
+	DWORD64 UnknownArrayPadA;//0x58
+	BYTE UnknownF;//0x60 (0xFF)
+	BYTE Padding0061[0x7];
+	DWORD64 UnknownArrayPtrB;//0x68 (BYTE, 0x01)
+	DWORD64 UnknownArrayEndB;//0x70
+	DWORD64 UnknownArrayPadB;//0x78
+	BYTE UnknownG;//0x80 (0x00)
+	BYTE Padding0081[0xF];
+};
+
 //Custom Classes
 class CustomEntry
 {
@@ -680,6 +710,35 @@ public:
 	DWORD64 RecipeArraySize;	//0x140 (0x10)
 	DWORD64 RecipeArray;		//0x148 (0x18)
 	DWORD64 LearnedRecipeArray;	//0x150 (0x20)
+};
+
+class ExecutionProjectile
+{
+public:
+	BYTE ASM[0x20]              //0x0
+	{
+		0x48, 0x8B, 0xC1,       //mov rax, rcx
+		0x48, 0x8B, 0x48, 0x08, //mov rcx, [rax + 0x08]
+		0x48, 0x8B, 0x50, 0x10, //mov rdx, [rax + 0x10]
+		0x48, 0x8B, 0x00,       //mov rax, [rax]
+		0xFF, 0xE0,             //jmp rax
+		0xCC, 0xCC, 0xCC, 0xCC, //Padding
+		0xCC, 0xCC, 0xCC, 0xCC, //Padding
+		0xCC, 0xCC, 0xCC, 0xCC, //Padding
+	};
+	DWORD64 Address;            //0x20 (0x0)
+	DWORD64 RCX;                //0x28 (0x8)
+	DWORD64 RDX;                //0x30 (0x10)
+	BYTE Padding0038[0x8];      //0x38
+	BYTE Message[0x90];         //0x40
+	float RotationX;            //0xD0
+	float RotationY;            //0xD4
+	float RotationZ;            //0xD8
+	BYTE Padding00CC[0x4];      //0xDC
+	WORD UnknownArrayValueA;    //0xE0
+	BYTE Padding00D2[0xE];      //0xE2
+	BYTE UnknownArrayValueB;    //0xF0
+	BYTE Padding00E2[0xF];      //0xF1
 };
 
 class ExternalFunction
