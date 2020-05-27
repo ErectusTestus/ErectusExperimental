@@ -120,11 +120,11 @@ class Camera
 {
 public:
 	DWORD64 vtable;//0x0
-	BYTE Padding0008[0xD8];
-	float Forward[3];//0xE0
-	BYTE Padding00EC[0x24];
-	float Origin[3];//0x110
-	BYTE Padding011C[0x14];
+	BYTE Padding0008[0x68];
+	float Forward[3];//0x70
+	BYTE Padding007C[0x24];
+	float Origin[3];//0xA0
+	BYTE Padding00AC[0x84];
 	float View[16];//0x130
 };
 
@@ -380,8 +380,7 @@ class ItemInstancedArray
 public:
 	BYTE Padding0000[0x10];
 	DWORD64 ArrayPtr;//0x10
-	BYTE Padding0018[0x8];
-	DWORD64 ArrayEnd;//0x20
+	DWORD64 ArrayEnd;//0x18
 };
 
 class ExtraTextDisplayData
