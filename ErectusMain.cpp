@@ -217,6 +217,19 @@ void CancelKeybindInput()
 	}
 }
 
+void ClearKeybind(DWORD *KeybindKey, DWORD *KeybindBit)
+{
+	if (KeybindHandlerKey == KeybindKey && KeybindHandlerBit == KeybindBit)
+	{
+		KeybindHandlerKey = nullptr;
+		KeybindHandlerBit = nullptr;
+		OldKeybindHandlerKey = 0;
+		OldKeybindHandlerBit = 0;
+	}
+	*KeybindKey = 0;
+	*KeybindBit = 0;
+}
+
 bool KeybindHandler(WPARAM wParam, LPARAM lParam)
 {
 	if (KeybindHandlerKey == nullptr)
