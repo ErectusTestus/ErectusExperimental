@@ -235,6 +235,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			KeybindHandlerKey = nullptr;
 			KeybindHandlerBit = nullptr;
+			OldKeybindHandlerKey = 0;
+			OldKeybindHandlerBit = 0;
 		}
 		return 0;
 	case WM_PAINT:
