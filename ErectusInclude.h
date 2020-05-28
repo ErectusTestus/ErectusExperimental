@@ -1305,6 +1305,15 @@ extern bool OverlayMenuPress;
 
 extern bool ExperimentalOverlayFix;
 
+extern DWORD *KeybindHandlerKey;
+extern DWORD *KeybindHandlerBit;
+extern DWORD OldKeybindHandlerKey;
+extern DWORD OldKeybindHandlerBit;
+
+extern void KeybindInput(DWORD *KeybindKey, DWORD *KeybindBit);
+extern void CancelKeybindInput();
+extern void ClearKeybind(DWORD *KeybindKey, DWORD *KeybindBit);
+
 //Erectus
 extern float GetDegrees(float *src, float *Forward, float *Origin);
 extern void ProjectView(float *dst, float *Forward, float *Origin, float Distance);
