@@ -244,6 +244,10 @@ bool KeybindHandler(WPARAM wParam, LPARAM lParam)
 
 	*KeybindHandlerKey = DWORD(wParam);
 	*KeybindHandlerBit = DWORD(lParam);
+	KeybindHandlerKey = nullptr;
+	KeybindHandlerBit = nullptr;
+	OldKeybindHandlerKey = 0;
+	OldKeybindHandlerBit = 0;
 
 	return true;
 }
@@ -259,13 +263,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_KEYDOWN:
-		if (KeybindHandler(wParam, lParam))
-		{
-			KeybindHandlerKey = nullptr;
-			KeybindHandlerBit = nullptr;
-			OldKeybindHandlerKey = 0;
-			OldKeybindHandlerBit = 0;
-		}
+		KeybindHandler(wParam, lParam);
 		return 0;
 	case WM_PAINT:
 		D3D9Render();
