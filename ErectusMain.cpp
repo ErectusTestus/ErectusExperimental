@@ -13,6 +13,11 @@ int WindowTopmostCounter = 0;
 
 bool ExperimentalOverlayFix = false;
 
+DWORD *KeybindHandlerKey = nullptr;
+DWORD *KeybindHandlerBit = nullptr;
+DWORD OldKeybindHandlerKey = 0;
+DWORD OldKeybindHandlerBit = 0;
+
 void Close()
 {
 	if (WindowHwnd != NULL)
@@ -184,6 +189,37 @@ bool SetOverlayPosition(bool Topmost, bool Layered)
 	return true;
 }
 
+void CancelKeybindInput()
+{
+	if (KeybindHandlerKey != nullptr && KeybindHandlerBit != nullptr)
+	{
+		*KeybindHandlerKey = OldKeybindHandlerKey;
+		*KeybindHandlerBit = OldKeybindHandlerBit;
+		KeybindHandlerKey = nullptr;
+		KeybindHandlerBit = nullptr;
+		OldKeybindHandlerKey = 0;
+		OldKeybindHandlerBit = 0;
+	}
+}
+
+bool KeybindHandler(WPARAM wParam, LPARAM lParam)
+{
+	if (KeybindHandlerKey == nullptr)
+	{
+		return false;
+	}
+
+	if (KeybindHandlerBit == nullptr)
+	{
+		return false;
+	}
+
+	*KeybindHandlerKey = DWORD(wParam);
+	*KeybindHandlerBit = DWORD(lParam);
+
+	return true;
+}
+
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -194,6 +230,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg)
 	{
+	case WM_KEYDOWN:
+		if (KeybindHandler(wParam, lParam))
+		{
+			KeybindHandlerKey = nullptr;
+			KeybindHandlerBit = nullptr;
+		}
+		return 0;
 	case WM_PAINT:
 		D3D9Render();
 		return 0;
@@ -281,6 +324,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	}
 
 	ResetProcessData(true, 0);
+	CancelKeybindInput();
 	WriteIniSettings();
 
 	D3D9Cleanup();
