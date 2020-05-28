@@ -189,6 +189,21 @@ bool SetOverlayPosition(bool Topmost, bool Layered)
 	return true;
 }
 
+void KeybindInput(DWORD *KeybindKey, DWORD *KeybindBit)
+{
+	if (KeybindHandlerKey != nullptr && KeybindHandlerBit != nullptr)
+	{
+		*KeybindHandlerKey = OldKeybindHandlerKey;
+		*KeybindHandlerBit = OldKeybindHandlerBit;
+	}
+	KeybindHandlerKey = KeybindKey;
+	KeybindHandlerBit = KeybindBit;
+	OldKeybindHandlerKey = *KeybindHandlerKey;
+	OldKeybindHandlerBit = *KeybindHandlerBit;
+	*KeybindHandlerKey = 0;
+	*KeybindHandlerBit = 0;
+}
+
 void CancelKeybindInput()
 {
 	if (KeybindHandlerKey != nullptr && KeybindHandlerBit != nullptr)
